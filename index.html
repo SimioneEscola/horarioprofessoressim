@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Horários — E.E. Prof. Luiz Simioni Sobrinho</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1a2744;--navy2:#243058;--navy3:#2e3d6a;
+  --amber:#f59e0b;--amber2:#fbbf24;
+  --green:#16a34a;--green2:#22c55e;
+  --sub-color:#f97316;--sub-bg:rgba(249,115,22,.08);--sub-border:#f97316;
+  --bg:#f1f5f9;--white:#ffffff;
+  --text:#1e293b;--text2:#475569;--text3:#94a3b8;
+  --border:#e2e8f0;
+  --shadow:0 1px 3px rgba(0,0,0,.1),0 1px 2px rgba(0,0,0,.06);
+  --shadow-md:0 4px 12px rgba(0,0,0,.08);
+  --shadow-lg:0 10px 30px rgba(0,0,0,.12);
+  --radius:10px;--sidebar:268px;
+  --c-mat:#3b82f6;--c-port:#10b981;--c-hist:#f59e0b;--c-fis:#8b5cf6;
+  --c-bio:#22c55e;--c-qui:#06b6d4;--c-geo:#f97316;--c-filo:#6366f1;
+  --c-arte:#ec4899;--c-ef:#ef4444;--c-ing:#0ea5e9;--c-soc:#a855f7;
+  --c-tech:#64748b;--c-adm:#d97706;--c-el:#94a3b8;--c-fin:#84cc16;--c-misc:#0f766e;
+}
+[data-dark]{
+  --bg:#0f172a;--white:#1e293b;--text:#e2e8f0;--text2:#94a3b8;--text3:#475569;
+  --border:#334155;--navy:#0f172a;--navy2:#1e293b;--navy3:#334155;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;overflow:hidden;transition:background .3s,color .3s}
+
+/* ── SIDEBAR ── */
+.sidebar{width:var(--sidebar);background:var(--navy);color:#fff;display:flex;flex-direction:column;flex-shrink:0;height:100vh;overflow-y:auto;position:relative;z-index:10}
+.sidebar-header{padding:20px 18px 14px;border-bottom:1px solid rgba(255,255,255,.08)}
+.sidebar-logo{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+.sidebar-logo-icon{width:34px;height:34px;background:var(--amber);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;font-weight:800;font-size:15px;color:#fff;flex-shrink:0}
+.sidebar-title{font-family:'Sora',sans-serif;font-weight:700;font-size:12.5px;line-height:1.3;color:#fff}
+.sidebar-sub{font-size:10px;color:rgba(255,255,255,.4);margin-top:5px}
+
+/* Section switcher */
+.section-switch{display:flex;gap:4px;padding:10px 10px 0;margin-bottom:2px}
+.sec-btn{flex:1;padding:7px 6px;border-radius:8px;border:1.5px solid rgba(255,255,255,.15);background:transparent;color:rgba(255,255,255,.5);font-size:11.5px;font-weight:600;cursor:pointer;font-family:'Sora',sans-serif;transition:all .2s;text-align:center}
+.sec-btn:hover{border-color:rgba(255,255,255,.3);color:#fff}
+.sec-btn.active{background:var(--amber);border-color:var(--amber);color:#fff}
+.sec-btn.active.af{background:#16a34a;border-color:#16a34a}
+
+.sidebar-nav{padding:8px 10px;flex:1}
+.nav-section{margin-bottom:14px}
+.nav-section-label{font-size:9.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.3);padding:0 10px;margin-bottom:5px}
+.nav-item{display:flex;align-items:center;gap:9px;padding:8px 12px;border-radius:8px;cursor:pointer;font-size:13px;color:rgba(255,255,255,.6);transition:all .15s;margin-bottom:1px;user-select:none}
+.nav-item:hover{background:rgba(255,255,255,.07);color:#fff}
+.nav-item.active{background:var(--amber);color:#fff;font-weight:600}
+.nav-item.active.af-active{background:#16a34a}
+.nav-icon{font-size:14px;opacity:.7;flex-shrink:0}
+.sidebar-footer{padding:12px 14px;border-top:1px solid rgba(255,255,255,.08);display:flex;gap:6px;flex-wrap:wrap}
+.sidebar-btn{flex:1;min-width:50px;padding:6px;border-radius:7px;border:1px solid rgba(255,255,255,.15);background:transparent;color:rgba(255,255,255,.6);cursor:pointer;font-size:11px;transition:all .15s;font-family:'DM Sans',sans-serif}
+.sidebar-btn:hover{background:rgba(255,255,255,.08);color:#fff}
+
+/* ── MAIN ── */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;height:100vh}
+.topbar{background:var(--white);border-bottom:1px solid var(--border);padding:11px 22px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;flex-shrink:0}
+.topbar-title{font-family:'Sora',sans-serif;font-weight:700;font-size:17px;flex:1;min-width:140px}
+.topbar-title span{color:var(--amber)}
+.topbar-title span.af{color:#16a34a}
+.search-wrap{position:relative;flex:1;max-width:300px}
+.search-wrap input{width:100%;padding:7px 12px 7px 34px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;transition:border-color .15s}
+.search-wrap input:focus{outline:none;border-color:var(--amber)}
+.search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:13px;pointer-events:none}
+.topbar-controls{display:flex;gap:7px;align-items:center}
+.ctrl-btn{padding:6px 12px;border-radius:8px;border:1.5px solid var(--border);background:var(--white);color:var(--text2);font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;display:flex;align-items:center;gap:5px;white-space:nowrap}
+.ctrl-btn:hover{border-color:var(--amber);color:var(--amber)}
+.ctrl-btn.active{background:var(--amber);border-color:var(--amber);color:#fff}
+.ctrl-btn.sub-btn{border-color:var(--sub-color);color:var(--sub-color)}
+.ctrl-btn.sub-btn:hover,.ctrl-btn.sub-btn.active{background:var(--sub-color);color:#fff;border-color:var(--sub-color)}
+
+.filter-bar{background:var(--white);border-bottom:1px solid var(--border);padding:9px 22px;display:flex;gap:9px;align-items:center;flex-wrap:wrap;flex-shrink:0}
+.filter-select{padding:5px 9px;border:1.5px solid var(--border);border-radius:7px;font-size:12px;background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;cursor:pointer;transition:border-color .15s}
+.filter-select:focus{outline:none;border-color:var(--amber)}
+.filter-label{font-size:12px;color:var(--text2);font-weight:500}
+
+.content{flex:1;overflow-y:auto;padding:18px 22px}
+
+/* ── GRID ── */
+.schedule-grid{border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);background:var(--white);box-shadow:var(--shadow-md)}
+.grid-corner,.grid-day-header{padding:10px 12px}
+.grid-period-header,.grid-cell{padding:9px 11px}
+.grid-corner{background:var(--navy);color:rgba(255,255,255,.6);font-size:11px;font-weight:600;letter-spacing:.05em}
+.grid-day-header{background:var(--navy);color:#fff;font-family:'Sora',sans-serif;font-weight:600;font-size:12px;text-align:center;border-left:1px solid rgba(255,255,255,.08)}
+.grid-period-header{background:var(--navy2);color:rgba(255,255,255,.8);font-size:11px;text-align:center;border-top:1px solid rgba(255,255,255,.06)}
+.period-num{font-family:'DM Mono',monospace;font-weight:500;font-size:13px;color:#fff;display:block}
+.period-time{font-size:9.5px;color:rgba(255,255,255,.4);display:block;margin-top:1px}
+.grid-cell{border-top:1px solid var(--border);border-left:1px solid var(--border);cursor:pointer;transition:background .12s;position:relative;min-height:68px}
+.grid-cell:hover{background:rgba(245,158,11,.04)}
+.grid-cell.editable:hover{background:rgba(245,158,11,.09)}
+.grid-break{background:var(--bg);border-top:1px solid var(--border);border-left:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:10.5px;color:var(--text3);font-style:italic;letter-spacing:.04em;padding:6px}
+
+/* ── LESSON CARD ── */
+.lesson-card{border-radius:7px;padding:6px 8px;height:100%;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+.lesson-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:3px 0 0 3px}
+.lesson-subject{font-size:11.5px;font-weight:600;line-height:1.3;margin-bottom:1px}
+.lesson-teacher{font-size:10.5px;color:var(--text2)}
+.lesson-teacher.strike{text-decoration:line-through;opacity:.6}
+.lesson-sub-teacher{font-size:10.5px;color:var(--sub-color);font-weight:600}
+.lesson-sub-reason{font-size:9.5px;color:var(--sub-color);opacity:.8;font-style:italic;margin-top:1px}
+
+/* ── SUBSTITUTION INDICATOR ── */
+.sub-badge{position:absolute;top:4px;right:4px;background:var(--sub-color);color:#fff;font-size:8.5px;font-weight:700;padding:1px 5px;border-radius:10px;letter-spacing:.06em;z-index:1}
+.grid-cell.has-sub .lesson-card{background:var(--sub-bg)!important;outline:2px solid var(--sub-border);outline-offset:-1px}
+.grid-cell.has-sub .lesson-card::before{background:var(--sub-color)!important}
+
+/* ── CONFLICT ── */
+.conflict{outline:2px solid #ef4444!important;outline-offset:-2px}
+.conflict::after{content:'⚠';position:absolute;top:4px;right:4px;font-size:11px;color:#ef4444}
+.grid-cell.has-sub.conflict::after{right:30px}
+
+/* Subject color classes */
+.mat{background:rgba(59,130,246,.08)}.mat .lesson-card::before{background:var(--c-mat)}.mat .lesson-subject{color:#1d4ed8}
+.port{background:rgba(16,185,129,.08)}.port .lesson-card::before{background:var(--c-port)}.port .lesson-subject{color:#065f46}
+.hist{background:rgba(245,158,11,.08)}.hist .lesson-card::before{background:var(--c-hist)}.hist .lesson-subject{color:#92400e}
+.fis{background:rgba(139,92,246,.08)}.fis .lesson-card::before{background:var(--c-fis)}.fis .lesson-subject{color:#4c1d95}
+.bio{background:rgba(34,197,94,.08)}.bio .lesson-card::before{background:var(--c-bio)}.bio .lesson-subject{color:#14532d}
+.qui{background:rgba(6,182,212,.08)}.qui .lesson-card::before{background:var(--c-qui)}.qui .lesson-subject{color:#155e75}
+.geo{background:rgba(249,115,22,.08)}.geo .lesson-card::before{background:var(--c-geo)}.geo .lesson-subject{color:#7c2d12}
+.filo{background:rgba(99,102,241,.08)}.filo .lesson-card::before{background:var(--c-filo)}.filo .lesson-subject{color:#312e81}
+.arte{background:rgba(236,72,153,.08)}.arte .lesson-card::before{background:var(--c-arte)}.arte .lesson-subject{color:#831843}
+.ef{background:rgba(239,68,68,.08)}.ef .lesson-card::before{background:var(--c-ef)}.ef .lesson-subject{color:#7f1d1d}
+.ing{background:rgba(14,165,233,.08)}.ing .lesson-card::before{background:var(--c-ing)}.ing .lesson-subject{color:#0c4a6e}
+.soc{background:rgba(168,85,247,.08)}.soc .lesson-card::before{background:var(--c-soc)}.soc .lesson-subject{color:#581c87}
+.tech{background:rgba(100,116,139,.08)}.tech .lesson-card::before{background:var(--c-tech)}.tech .lesson-subject{color:#1e293b}
+.adm{background:rgba(217,119,6,.08)}.adm .lesson-card::before{background:var(--c-adm)}.adm .lesson-subject{color:#78350f}
+.el{background:rgba(148,163,184,.1)}.el .lesson-card::before{background:var(--c-el)}.el .lesson-subject{color:#475569}
+.fin{background:rgba(132,204,22,.08)}.fin .lesson-card::before{background:var(--c-fin)}.fin .lesson-subject{color:#365314}
+.misc{background:rgba(15,118,110,.08)}.misc .lesson-card::before{background:var(--c-misc)}.misc .lesson-subject{color:#134e4a}
+[data-dark] .mat .lesson-subject{color:#93c5fd}[data-dark] .port .lesson-subject{color:#6ee7b7}[data-dark] .hist .lesson-subject{color:#fde68a}
+[data-dark] .fis .lesson-subject{color:#c4b5fd}[data-dark] .bio .lesson-subject{color:#86efac}[data-dark] .qui .lesson-subject{color:#a5f3fc}
+[data-dark] .geo .lesson-subject{color:#fdba74}[data-dark] .filo .lesson-subject{color:#a5b4fc}[data-dark] .arte .lesson-subject{color:#f9a8d4}
+[data-dark] .ef .lesson-subject{color:#fca5a5}[data-dark] .ing .lesson-subject{color:#7dd3fc}[data-dark] .soc .lesson-subject{color:#d8b4fe}
+[data-dark] .tech .lesson-subject{color:#cbd5e1}[data-dark] .adm .lesson-subject{color:#fcd34d}[data-dark] .el .lesson-subject{color:#cbd5e1}
+[data-dark] .fin .lesson-subject{color:#bef264}[data-dark] .misc .lesson-subject{color:#5eead4}
+
+/* ── TEACHER VIEW ── */
+.teacher-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px}
+.teacher-day-col{background:var(--white);border-radius:var(--radius);overflow:hidden;border:1px solid var(--border)}
+.teacher-day-header{background:var(--navy);color:#fff;padding:9px 13px;font-family:'Sora',sans-serif;font-weight:600;font-size:12.5px}
+.teacher-lesson{padding:9px 11px;border-top:1px solid var(--border);cursor:pointer;transition:background .12s;position:relative}
+.teacher-lesson:hover{background:var(--bg)}
+.teacher-lesson.has-sub{border-left:3px solid var(--sub-color);padding-left:8px}
+.teacher-lesson-time{font-size:9.5px;color:var(--text3);font-family:'DM Mono',monospace;margin-bottom:3px}
+.teacher-lesson-class{font-size:12px;font-weight:700;color:var(--navy)}
+[data-dark] .teacher-lesson-class{color:var(--amber2)}
+.teacher-sub-badge{display:inline-block;background:var(--sub-color);color:#fff;font-size:8px;font-weight:700;padding:1px 5px;border-radius:8px;margin-left:5px;vertical-align:middle}
+
+/* ── CARDS ── */
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
+.info-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow)}
+.info-card-header{display:flex;align-items:center;gap:9px;margin-bottom:10px}
+.info-card-icon{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.info-card-title{font-family:'Sora',sans-serif;font-weight:700;font-size:13.5px}
+.info-card-sub{font-size:11.5px;color:var(--text2)}
+.info-card-rows{display:flex;flex-direction:column;gap:5px}
+.info-card-row{display:flex;justify-content:space-between;align-items:center;padding:5px 9px;background:var(--bg);border-radius:6px;font-size:12px}
+.info-card-row.is-sub{background:var(--sub-bg);border:1px solid rgba(249,115,22,.2)}
+.info-card-row-label{color:var(--text2)}
+.info-card-row-value{font-weight:600;font-family:'DM Mono',monospace;font-size:11.5px}
+
+/* ── LEGEND ── */
+.legend{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}
+.legend-item{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--text2)}
+.legend-dot{width:9px;height:9px;border-radius:3px;flex-shrink:0}
+
+/* ── MODAL ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:100;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s;backdrop-filter:blur(4px)}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal{background:var(--white);border-radius:14px;padding:22px;width:380px;max-width:calc(100vw - 36px);box-shadow:var(--shadow-lg);transform:translateY(8px);transition:transform .2s;max-height:90vh;overflow-y:auto}
+.modal-overlay.open .modal{transform:translateY(0)}
+.modal-title{font-family:'Sora',sans-serif;font-weight:700;font-size:16px;margin-bottom:3px}
+.modal-sub{font-size:12px;color:var(--text2);margin-bottom:16px}
+.modal-field{margin-bottom:12px}
+.modal-field label{display:block;font-size:11px;font-weight:600;color:var(--text2);margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em}
+.modal-field input,.modal-field select,.modal-field textarea{width:100%;padding:8px 11px;border:1.5px solid var(--border);border-radius:8px;font-size:13.5px;background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;transition:border-color .15s}
+.modal-field input:focus,.modal-field select:focus,.modal-field textarea:focus{outline:none;border-color:var(--amber)}
+.modal-field textarea{resize:vertical;min-height:56px}
+.modal-divider{border:none;border-top:1px solid var(--border);margin:14px 0}
+.modal-section-title{font-size:12px;font-weight:700;color:var(--sub-color);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.modal-toggle-row{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--sub-bg);border-radius:8px;border:1.5px solid rgba(249,115,22,.2);cursor:pointer;margin-bottom:12px}
+.modal-toggle-row input[type=checkbox]{width:16px;height:16px;accent-color:var(--sub-color);cursor:pointer}
+.modal-toggle-label{font-size:13px;font-weight:600;color:var(--sub-color);cursor:pointer}
+.modal-sub-fields{animation:fadeIn .2s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.modal-actions{display:flex;gap:8px;margin-top:16px}
+.modal-btn{flex:1;padding:9px;border-radius:8px;border:none;font-size:13.5px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s}
+.modal-btn.primary{background:var(--amber);color:#fff}
+.modal-btn.primary:hover{background:var(--amber2)}
+.modal-btn.secondary{background:var(--bg);color:var(--text);border:1.5px solid var(--border)}
+.modal-btn.secondary:hover{border-color:var(--text2)}
+.modal-btn.danger{background:rgba(239,68,68,.1);color:#ef4444;border:1.5px solid rgba(239,68,68,.2)}
+
+/* ── SUBSTITUTION PANEL ── */
+.sub-panel{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:16px;box-shadow:var(--shadow)}
+.sub-panel-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.sub-panel-title{font-family:'Sora',sans-serif;font-weight:700;font-size:14px;color:var(--sub-color)}
+.sub-panel-count{background:var(--sub-color);color:#fff;font-size:11px;font-weight:700;padding:1px 8px;border-radius:12px}
+.sub-list{display:flex;flex-direction:column;gap:8px}
+.sub-item{display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--sub-bg);border:1px solid rgba(249,115,22,.2);border-radius:8px;border-left:3px solid var(--sub-color)}
+.sub-item-info{flex:1;min-width:0}
+.sub-item-main{font-size:12.5px;font-weight:600}
+.sub-item-detail{font-size:11px;color:var(--text2);margin-top:1px}
+.sub-item-reason{font-size:11px;color:var(--sub-color);font-style:italic}
+.sub-item-remove{padding:4px 8px;border-radius:6px;border:1px solid rgba(249,115,22,.3);background:transparent;color:var(--sub-color);cursor:pointer;font-size:11px;font-family:'DM Sans',sans-serif;transition:all .15s;white-space:nowrap}
+.sub-item-remove:hover{background:var(--sub-color);color:#fff}
+
+/* ── MISC ── */
+.stats-bar{display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.stat-chip{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:9px 14px;flex:1;min-width:110px}
+.stat-chip-value{font-family:'Sora',sans-serif;font-weight:800;font-size:22px;color:var(--amber)}
+.stat-chip-value.af{color:#16a34a}
+.stat-chip-label{font-size:10.5px;color:var(--text2);margin-top:1px}
+.tab-strip{display:flex;gap:2px;background:var(--bg);border-radius:10px;padding:3px;margin-bottom:16px;border:1px solid var(--border);overflow-x:auto}
+.tab-btn{flex:1;min-width:52px;padding:6px 10px;border-radius:7px;border:none;background:transparent;color:var(--text2);font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;white-space:nowrap}
+.tab-btn.active{background:var(--white);color:var(--navy);font-weight:700;box-shadow:var(--shadow)}
+.empty-state{text-align:center;padding:50px 20px;color:var(--text2)}
+.empty-state-icon{font-size:44px;margin-bottom:10px;opacity:.4}
+.empty-state-text{font-size:14px;font-weight:500}
+.toast{position:fixed;bottom:22px;right:22px;background:var(--navy);color:#fff;padding:11px 16px;border-radius:10px;font-size:12.5px;box-shadow:var(--shadow-lg);transform:translateY(70px);opacity:0;transition:all .3s;z-index:200;display:flex;align-items:center;gap:7px}
+.toast.show{transform:translateY(0);opacity:1}
+.badge{display:inline-block;font-size:9px;font-weight:700;padding:1px 6px;border-radius:12px;margin-left:4px;vertical-align:middle;color:#fff}
+.lunch-note{font-size:9px;color:rgba(255,255,255,.35);display:block;margin-top:1px;font-style:italic}
+
+@media print{
+  .sidebar,.topbar,.filter-bar,.ctrl-btn,.modal-overlay,.toast{display:none!important}
+  .main{height:auto;overflow:visible}.content{overflow:visible;padding:0}
+  .schedule-grid{box-shadow:none;font-size:8.5px}.grid-cell{min-height:48px}
+  body{background:#fff}
+}
+@media(max-width:768px){
+  :root{--sidebar:0px}
+  .sidebar{position:fixed;left:-268px;transition:left .3s;z-index:50;width:268px}
+  .sidebar.open{left:0}
+  .teacher-grid{grid-template-columns:1fr}
+  .stats-bar{gap:7px}
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-icon">LS</div>
+      <div class="sidebar-title">E.E. Prof. Luiz Simioni Sobrinho</div>
+    </div>
+    <div class="sidebar-sub">Sistema de Gestão de Horários — 2026</div>
+  </div>
+
+  <div class="section-switch">
+    <button class="sec-btn active" id="secEM" onclick="setSection('em')">🎓 Ens. Médio</button>
+    <button class="sec-btn af" id="secAF" onclick="setSection('af')">📚 Anos Finais</button>
+  </div>
+
+  <div class="sidebar-nav">
+    <div class="nav-section">
+      <div class="nav-section-label">Visualizar</div>
+      <div class="nav-item active" data-view="turma"><span class="nav-icon">📋</span> Por Turma</div>
+      <div class="nav-item" data-view="professor"><span class="nav-icon">👤</span> Por Professor</div>
+      <div class="nav-item" data-view="disciplina"><span class="nav-icon">📚</span> Por Disciplina</div>
+      <div class="nav-item" data-view="substituicoes"><span class="nav-icon">🔄</span> Substituições</div>
+      <div class="nav-item" data-view="busca"><span class="nav-icon">🔍</span> Busca</div>
+    </div>
+    <div class="nav-section" id="classNav">
+      <div class="nav-section-label" id="classNavLabel">Turmas</div>
+      <div id="classNavItems"></div>
+    </div>
+  </div>
+  <div class="sidebar-footer">
+    <button class="sidebar-btn" id="darkModeBtn">🌙 Escuro</button>
+    <button class="sidebar-btn" id="printBtn">🖨️ Imprimir</button>
+    <button class="sidebar-btn" id="resetBtn">↩️ Reset</button>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="topbar">
+    <button class="ctrl-btn" id="menuToggle" style="display:none">☰</button>
+    <div class="topbar-title" id="topbarTitle">Horários <span>Ensino Médio</span></div>
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="globalSearch" placeholder="Buscar professor, disciplina…">
+    </div>
+    <div class="topbar-controls">
+      <button class="ctrl-btn sub-btn" id="subModeBtn">🔄 Substituição</button>
+      <button class="ctrl-btn" id="editModeBtn">✏️ Editar</button>
+      <button class="ctrl-btn" id="undoBtn" style="opacity:.4" disabled>↩ Desfazer</button>
+      <button class="ctrl-btn" id="saveBtn" style="display:none">💾 Salvar</button>
+    </div>
+  </div>
+  <div class="filter-bar">
+    <span class="filter-label">Filtrar:</span>
+    <select class="filter-select" id="filterClass"><option value="">Todas as turmas</option></select>
+    <select class="filter-select" id="filterTeacher"><option value="">Todos os professores</option></select>
+    <select class="filter-select" id="filterSubject"><option value="">Todas as disciplinas</option></select>
+    <button class="ctrl-btn" id="clearFilters">✕ Limpar</button>
+  </div>
+  <div class="content" id="mainContent"></div>
+</div>
+
+<!-- EDIT MODAL -->
+<div class="modal-overlay" id="editModal">
+  <div class="modal">
+    <div class="modal-title">✏️ Editar Aula</div>
+    <div class="modal-sub" id="modalSub"></div>
+    <div class="modal-field">
+      <label>Disciplina</label>
+      <input type="text" id="modalSubject" list="subjectList">
+      <datalist id="subjectList"></datalist>
+    </div>
+    <div class="modal-field">
+      <label>Professor(a) Titular</label>
+      <input type="text" id="modalTeacher" list="teacherList">
+      <datalist id="teacherList"></datalist>
+    </div>
+    <hr class="modal-divider">
+    <div class="modal-section-title">🔄 Substituição de Professor</div>
+    <label class="modal-toggle-row" id="subToggleRow">
+      <input type="checkbox" id="modalIsSub">
+      <span class="modal-toggle-label">Marcar esta aula com substituição</span>
+    </label>
+    <div id="modalSubFields" style="display:none" class="modal-sub-fields">
+      <div class="modal-field">
+        <label>Professor(a) Substituto(a)</label>
+        <input type="text" id="modalSubTeacher" list="teacherList" placeholder="Nome do substituto">
+      </div>
+      <div class="modal-field">
+        <label>Motivo</label>
+        <input type="text" id="modalSubReason" placeholder="Ex: Prof. ausente, Capacitação, Licença…">
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn secondary" id="modalCancel">Cancelar</button>
+      <button class="modal-btn danger" id="modalClear">Limpar</button>
+      <button class="modal-btn primary" id="modalSave">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+//  ENSINO MÉDIO DATA
+// ═══════════════════════════════════════════════════════
+const EM_CLASSES = ['1°A','1°B','1°C','2°C','3°H','2°ADM','2°DES','3°ADM','3°DES'];
+const EM_DAYS_SHORT = ['Segunda','Terça','Quarta','Quinta','Sexta'];
+const EM_PERIODS = [
+  {num:'1ª',time:'14:30–15:20',pi:0},{num:'2ª',time:'15:20–16:10',pi:1},
+  {num:'INT',time:'16:10–16:20',isBreak:true,label:'Intervalo'},
+  {num:'3ª',time:'16:20–17:10',pi:2},{num:'4ª',time:'17:10–18:00',pi:3},
+  {num:'5ª',time:'18:00–18:50',pi:4},
+  {num:'JANT',time:'18:50–19:50',isBreak:true,label:'Jantar'},
+  {num:'6ª',time:'19:50–20:40',pi:5},{num:'7ª',time:'20:40–21:30',pi:6},
+];
+const EM_RAW = [
+  [0,0,0,'Sandra','Matemática'],[0,0,1,'Val','História'],[0,0,2,'Ricardo','Física'],[0,0,3,'Paulo','L. Portuguesa'],
+  [0,0,4,'Edson','Aprof. Sociologia'],[0,0,5,'Amanda','Int. Adm.'],[0,0,6,'Jéssica','L. Inglesa'],[0,0,7,'Elaine','L. Portuguesa'],[0,0,8,'Cleusa','Matemática'],
+  [0,1,0,'Sandra','Matemática'],[0,1,1,'Val','História'],[0,1,2,'Ricardo','Física'],[0,1,3,'Paulo','L. Portuguesa'],
+  [0,1,4,'Edson','Aprof. Sociologia'],[0,1,5,'Amanda','Int. Adm.'],[0,1,6,'Jéssica','L. Inglesa'],[0,1,7,'Elaine','L. Portuguesa'],[0,1,8,'Cleusa','Matemática'],
+  [0,2,0,'Ricardo','Or. de Estudos'],[0,2,1,'Sandra','Ed. Financeira'],[0,2,2,'Jéssica','Or. de Estudos'],[0,2,3,'Ysma','Biologia'],
+  [0,2,4,'Paulo','Atualidades'],[0,2,5,'Cleusa','Matemática'],[0,2,6,'Rodrigo','Ed. Física'],[0,2,7,'Amanda','Com. Empresarial'],[0,2,8,'Gabriel','Prog. Mobile'],
+  [0,3,0,'Paulo','Redação/Leitura'],[0,3,1,'Jéssica','L. Inglesa'],[0,3,2,'Sandra','Matemática'],[0,3,3,'Ricardo','Física'],
+  [0,3,4,'Cleusa','Matemática'],[0,3,5,'Ysma','Biologia'],[0,3,6,'Serginei','Log. Programação'],[0,3,7,'Amanda','Com. Empresarial'],[0,3,8,'Gabriel','Prog. Mobile'],
+  [0,4,0,'Paulo','Redação/Leitura'],[0,4,1,'Jéssica','L. Inglesa'],[0,4,2,'Sandra','Matemática'],[0,4,3,'Ricardo','Física'],
+  [0,4,4,'Cleusa','Matemática'],[0,4,5,'Tadeu','Carreira/Comp.'],[0,4,6,'Serginei','Log. Programação'],[0,4,7,'Amanda','Com. Empresarial'],[0,4,8,'Milena','Vers. de Código'],
+  [0,5,0,'Rodrigo','Eletiva'],[0,5,1,'Sandra','Eletiva'],[0,5,2,'Edson','Eletiva'],[0,5,3,'Elaine','Eletiva'],
+  [0,5,4,'Ângelo','Eletiva'],[0,5,5,'Tadeu','Carreira/Comp.'],[0,5,6,'Gabriel','Red. Computacional'],[0,5,7,'Ricardo','Física'],[0,5,8,'Milena','Vers. de Código'],
+  [0,6,0,'Rodrigo','Eletiva'],[0,6,1,'Sandra','Eletiva'],[0,6,2,'Edson','Eletiva'],[0,6,3,'Elaine','Eletiva'],
+  [0,6,4,'Ângelo','Eletiva'],[0,6,5,'Tadeu','Carreira/Comp.'],[0,6,6,'Gabriel','Red. Computacional'],[0,6,7,'Ricardo','Física'],[0,6,8,'Milena','Vers. de Código'],
+  [1,0,0,'Rodrigo','Ed. Física'],[1,0,1,'Sandra','Matemática'],[1,0,2,'Val','Filosofia'],[1,0,3,'Ângelo','Arte e Mídias'],
+  [1,0,4,'Ricardo','Or. de Estudos'],[1,0,5,'Paulo','L. Portuguesa'],[1,0,6,'Edson','Geografia'],[1,0,7,'Elaine','L. Portuguesa'],[1,0,8,'Gabriel','Prog. Mobile'],
+  [1,1,0,'Rodrigo','Ed. Física'],[1,1,1,'Sandra','Matemática'],[1,1,2,'Val','Filosofia'],[1,1,3,'Jéssica','Or. de Estudos'],
+  [1,1,4,'Ricardo','Or. de Estudos'],[1,1,5,'Paulo','L. Portuguesa'],[1,1,6,'Edson','Geografia'],[1,1,7,'Cleusa','Nivelamento'],[1,1,8,'Gabriel','Nivelamento'],
+  [1,2,0,'Val','Filosofia'],[1,2,1,'Elaine','L. Portuguesa'],[1,2,2,'Sandra','Matemática'],[1,2,3,'Ysma','Biologia'],
+  [1,2,4,'Paulo','Atualidades'],[1,2,5,'Edson','Sociologia'],[1,2,6,'Gabriel','Red. Computacional'],[1,2,7,'Vanderleia','Gestão Org.'],[1,2,8,'Ângelo','Proj. de Vida'],
+  [1,3,0,'Elaine','L. Portuguesa'],[1,3,1,'Paulo','Redação/Leitura'],[1,3,2,'Sandra','Matemática'],[1,3,3,'Edson','Sociologia'],
+  [1,3,4,'Val','História'],[1,3,5,'Ysma','Química'],[1,3,6,'Serginei','Log. Programação'],[1,3,7,'Vanderleia','Gestão Org.'],[1,3,8,'Milena','Intel. Artificial'],
+  [1,4,0,'Elaine','L. Portuguesa'],[1,4,1,'Paulo','Redação/Leitura'],[1,4,2,'Ângelo','Proj. de Vida'],[1,4,3,'Edson','Sociologia'],
+  [1,4,4,'Val','História'],[1,4,5,'Ysma','Química'],[1,4,6,'Serginei','Log. Programação'],[1,4,7,'Vanderleia','Inovação'],[1,4,8,'Milena','Intel. Artificial'],
+  [1,5,0,'Jéssica','L. Inglesa'],[1,5,1,'Ângelo','Arte'],[1,5,2,'Elaine','L. Portuguesa'],[1,5,3,'Paulo','L. Portuguesa'],
+  [1,5,4,'Ricardo','Prat. Experimental'],[1,5,5,'Val','História'],[1,5,6,'Ysma','Química'],[1,5,7,'Vanderleia','Inovação'],[1,5,8,'Milena','Intel. Artificial'],
+  [1,6,0,'Jéssica','L. Inglesa'],[1,6,1,'Ângelo','Arte'],[1,6,2,'Elaine','L. Portuguesa'],[1,6,3,'Paulo','L. Portuguesa'],
+  [1,6,4,'Ricardo','Prat. Experimental'],[1,6,5,'Val','História'],[1,6,6,'Ysma','Química'],[1,6,7,'Vanderleia','Inovação'],[1,6,8,'Milena','Prog. Back-End'],
+  [2,0,0,'Ângelo','Arte'],[2,0,1,'Ricardo','Física'],[2,0,2,'Sandra','Ed. Financeira'],[2,0,3,'Val','História'],
+  [2,0,4,'Jéssica','Or. de Estudos'],[2,0,5,'Cleusa','Matemática'],[2,0,6,'Edson','Sociologia'],[2,0,7,'Paulo','Redação/Leitura'],[2,0,8,'Milena','Prog. Back-End'],
+  [2,1,0,'Ângelo','Arte'],[2,1,1,'Ricardo','Física'],[2,1,2,'Rodrigo','Ed. Física'],[2,1,3,'Val','História'],
+  [2,1,4,'Jéssica','Nivelamento'],[2,1,5,'Cleusa','Matemática'],[2,1,6,'Edson','Sociologia'],[2,1,7,'Paulo','Nivelamento'],[2,1,8,'Elaine','Nivelamento'],
+  [2,2,0,'Jéssica','Or. de Estudos'],[2,2,1,'Sandra','Ed. Financeira'],[2,2,2,'Rodrigo','Ed. Física'],[2,2,3,'Ricardo','Or. de Estudos'],
+  [2,2,4,'Cleusa','Matemática'],[2,2,5,'Ysma','Biologia'],[2,2,6,'Paulo','L. Portuguesa'],[2,2,7,'Elaine','L. Portuguesa'],[2,2,8,'Gabriel','Prog. Front-End'],
+  [2,3,0,'Sandra','Matemática'],[2,3,1,'Ysma','Química'],[2,3,2,'Edson','Geografia'],[2,3,3,'Jéssica','L. Inglesa'],
+  [2,3,4,'Elaine','L. Portuguesa'],[2,3,5,'Ricardo','Física'],[2,3,6,'Val','História'],[2,3,7,'Cleusa','Matemática'],[2,3,8,'Serginei','Mod. Design'],
+  [2,4,0,'Sandra','Matemática'],[2,4,1,'Ysma','Química'],[2,4,2,'Edson','Geografia'],[2,4,3,'Jéssica','L. Inglesa'],
+  [2,4,4,'Elaine','L. Portuguesa'],[2,4,5,'Ricardo','Física'],[2,4,6,'Val','História'],[2,4,7,'Rodrigo','Ed. Física'],[2,4,8,'Serginei','Mod. Design'],
+  [2,5,0,'Ricardo','Física'],[2,5,1,'Rodrigo','Ed. Física'],[2,5,2,'Ângelo','Arte'],[2,5,3,'Sandra','Matemática'],
+  [2,5,4,'Edson','Aprof. Geografia'],[2,5,5,'Paulo','L. Portuguesa'],[2,5,6,'Ysma','Biologia'],[2,5,7,'Val','História'],[2,5,8,'Elaine','L. Portuguesa'],
+  [2,6,0,'Ricardo','Física'],[2,6,1,'Rodrigo','Ed. Física'],[2,6,2,'Ângelo','Arte'],[2,6,3,'Sandra','Matemática'],
+  [2,6,4,'Edson','Aprof. Geografia'],[2,6,5,'Paulo','L. Portuguesa'],[2,6,6,'Ysma','Biologia'],[2,6,7,'Val','História'],[2,6,8,'Elaine','L. Portuguesa'],
+  [3,0,0,'Ysma','Química'],[3,0,1,'Edson','Geografia'],[3,0,2,'Elaine','L. Portuguesa'],[3,0,3,'Ricardo','Ed. Financeira'],
+  [3,0,4,'Val','Aprof. Filosofia'],[3,0,5,'Jéssica','L. Inglesa'],[3,0,6,'Paulo','L. Portuguesa'],[3,0,7,'Cleusa','Matemática'],[3,0,8,'Gabriel','Proj. Multidisciplinar'],
+  [3,1,0,'Ysma','Química'],[3,1,1,'Edson','Geografia'],[3,1,2,'Elaine','L. Portuguesa'],[3,1,3,'Ricardo','Ed. Financeira'],
+  [3,1,4,'Rodrigo','Proj. de Vida'],[3,1,5,'Jéssica','L. Inglesa'],[3,1,6,'Paulo','L. Portuguesa'],[3,1,7,'Cleusa','Matemática'],[3,1,8,'Gabriel','Proj. Multidisciplinar'],
+  [3,2,0,'Ângelo','Proj. de Vida'],[3,2,1,'Val','Filosofia'],[3,2,2,'Ysma','Química'],[3,2,3,'Rodrigo','Proj. de Vida'],
+  [3,2,4,'Ricardo','Prat. Experimental'],[3,2,5,'Amanda','Int. Adm.'],[3,2,6,'Cleusa','Matemática'],[3,2,7,'Vanderleia','Gestão Org.'],[3,2,8,'Serginei','Mod. Design'],
+  [3,3,0,'Val','História'],[3,3,1,'Elaine','L. Portuguesa'],[3,3,2,'Ysma','Química'],[3,3,3,'Edson','Geografia'],
+  [3,3,4,'Paulo','Redação/Leitura'],[3,3,5,'Amanda','Int. Adm.'],[3,3,6,'Cleusa','Matemática'],[3,3,7,'Vanderleia','Gestão Org.'],[3,3,8,'Serginei','Mod. Design'],
+  [3,4,0,'Val','História'],[3,4,1,'Elaine','L. Portuguesa'],[3,4,2,'Ricardo','Or. de Estudos'],[3,4,3,'Edson','Geografia'],
+  [3,4,4,'Paulo','Redação/Leitura'],[3,4,5,'Cleusa','Matemática'],[3,4,6,'Serginei','Carreira/Comp.'],[3,4,7,'Vanderleia','Proj. Multidisciplinar'],[3,4,8,'Gabriel','Proj. Multidisciplinar'],
+  [3,5,0,'Edson','Geografia'],[3,5,1,'Sandra','Matemática'],[3,5,2,'Jéssica','L. Inglesa'],[3,5,3,'Ysma','Química'],
+  [3,5,4,'Elaine','L. Portuguesa'],[3,5,5,'Amanda','Mat. Aplicada'],[3,5,6,'Gabriel','Proc. Design'],[3,5,7,'Vanderleia','Proj. Multidisciplinar'],[3,5,8,'Val','História'],
+  [3,6,0,'Edson','Geografia'],[3,6,1,'Sandra','Matemática'],[3,6,2,'Jéssica','L. Inglesa'],[3,6,3,'Ysma','Química'],
+  [3,6,4,'Elaine','L. Portuguesa'],[3,6,5,'Amanda','Mat. Aplicada'],[3,6,6,'Gabriel','Proc. Design'],[3,6,7,'Vanderleia','Proj. Multidisciplinar'],[3,6,8,'Val','História'],
+  [4,0,0,'Sandra','Ed. Financeira'],[4,0,1,'Jéssica','Or. de Estudos'],[4,0,2,'Ysma','Biologia'],[4,0,3,'Rodrigo','Ed. Física'],
+  [4,0,4,'Val','Aprof. Filosofia'],[4,0,5,'Edson','Sociologia'],[4,0,6,'Cleusa','Matemática'],[4,0,7,'Tadeu','Gestão Financeira'],[4,0,8,'Elaine','L. Portuguesa'],
+  [4,1,0,'Sandra','Ed. Financeira'],[4,1,1,'Val','Filosofia'],[4,1,2,'Ysma','Biologia'],[4,1,3,'Edson','Liderança/Oratória'],
+  [4,1,4,'Rodrigo','Ed. Física'],[4,1,5,'Ângelo','Proj. de Vida'],[4,1,6,'Cleusa','Matemática'],[4,1,7,'Tadeu','Gestão Financeira'],[4,1,8,'Elaine','L. Portuguesa'],
+  [4,2,0,'Val','Filosofia'],[4,2,1,'Ricardo','Or. de Estudos'],[4,2,2,'Sandra','Ed. Financeira'],[4,2,3,'Edson','Liderança/Oratória'],
+  [4,2,4,'Cleusa','Matemática'],[4,2,5,'Amanda','Mat. Aplicada'],[4,2,6,'Gabriel','Proc. Design'],[4,2,7,'Tadeu','Gestão Financeira'],[4,2,8,'Rodrigo','Ed. Física'],
+  [4,3,0,'Ysma','Biologia'],[4,3,1,'Elaine','L. Portuguesa'],[4,3,2,'Val','História'],[4,3,3,'Paulo','Redação/Leitura'],
+  [4,3,4,'Ricardo','Física'],[4,3,5,'Amanda','Mat. Aplicada'],[4,3,6,'Serginei','Carreira/Comp.'],[4,3,7,'Ângelo','Proj. de Vida'],[4,3,8,'Cleusa','Matemática'],
+  [4,4,0,'Ysma','Biologia'],[4,4,1,'Ângelo','Proj. de Vida'],[4,4,2,'Val','História'],[4,4,3,'Paulo','Redação/Leitura'],
+  [4,4,4,'Ricardo','Física'],[4,4,5,'Rodrigo','Ed. Física'],[4,4,6,'Serginei','Carreira/Comp.'],[4,4,7,'Amanda','Marketing Est.'],[4,4,8,'Cleusa','Matemática'],
+  [4,5,0,'Elaine','L. Portuguesa'],[4,5,1,'Ysma','Biologia'],[4,5,2,'Paulo','Redação/Leitura'],[4,5,3,'Sandra','Matemática'],
+  [4,5,4,'Jéssica','L. Inglesa'],[4,5,5,'Edson','Geografia'],[4,5,6,'Ricardo','Física'],[4,5,7,'Amanda','Marketing Est.'],[4,5,8,'Gabriel','Prog. Front-End'],
+  [4,6,0,'Elaine','L. Portuguesa'],[4,6,1,'Ysma','Biologia'],[4,6,2,'Paulo','Redação/Leitura'],[4,6,3,'Sandra','Matemática'],
+  [4,6,4,'Jéssica','L. Inglesa'],[4,6,5,'Edson','Geografia'],[4,6,6,'Ricardo','Física'],[4,6,7,'Amanda','Marketing Est.'],[4,6,8,'Gabriel','Prog. Front-End'],
+];
+
+// ═══════════════════════════════════════════════════════
+//  ANOS FINAIS (EFAF) DATA
+// ═══════════════════════════════════════════════════════
+const AF_CLASSES = ['6°A','6°B','6°C','7°A','7°B','8°A','8°B','8°C','9°A','9°B'];
+const AF_EARLY_LUNCH = 5; // classes idx 0-4 (6A-7B) have lunch at 11:20
+const AF_DAYS_SHORT = ['Segunda','Terça','Quarta','Quinta','Sexta'];
+// periods: 0=1ª,1=2ª,2=3ª,3=4ª,4=5ª,5=6ª,6=7ª
+function getAfPeriods(earlyLunch){
+  const base = [
+    {num:'1ª',time:'7:00–7:50',pi:0},{num:'2ª',time:'7:50–8:40',pi:1},
+    {num:'3ª',time:'8:40–9:30',pi:2},
+    {num:'INT',time:'9:30–9:40',isBreak:true,label:'Intervalo'},
+    {num:'4ª',time:'9:40–10:30',pi:3},{num:'5ª',time:'10:30–11:20',pi:4},
+  ];
+  if(earlyLunch){
+    base.push({num:'ALM',isBreak:true,label:'Almoço',time:'11:20–12:20'});
+    base.push({num:'6ª',time:'12:20–13:10',pi:5});
+  } else {
+    base.push({num:'6ª',time:'11:20–12:10',pi:5});
+    base.push({num:'ALM',isBreak:true,label:'Almoço',time:'12:10–13:10'});
+  }
+  base.push({num:'7ª',time:'13:10–14:00',pi:6});
+  return base;
+}
+
+const AF_RAW = [
+  // SEGUNDA (0)
+  [0,0,0,'Gilson','Red. e Leitura'],[0,0,1,'Andrea','Ciências'],[0,0,2,'Efigênia','Matemática'],[0,0,3,'Livia','L. Portuguesa'],
+  [0,0,4,'Santana','Geografia'],[0,0,5,'Rita','Matemática'],[0,0,6,'Wallace','Ciências'],[0,0,7,'Helio','História'],[0,0,8,'Eliana','L. Portuguesa'],[0,0,9,'Sueli','L. Inglesa'],
+  [0,1,0,'Gilson','Red. e Leitura'],[0,1,1,'Andrea','Ciências'],[0,1,2,'Efigênia','Matemática'],[0,1,3,'Livia','L. Portuguesa'],
+  [0,1,4,'Luci','Arte'],[0,1,5,'Rita','Matemática'],[0,1,6,'Wallace','Ciências'],[0,1,7,'Helio','História'],[0,1,8,'Eliana','L. Portuguesa'],[0,1,9,'Sueli','L. Inglesa'],
+  [0,2,0,'Andrea','Ciências'],[0,2,1,'Efigênia','Matemática'],[0,2,2,'Santana','Geografia'],[0,2,3,'Sueli','L. Inglesa'],
+  [0,2,4,'Rita','Matemática'],[0,2,5,'Livia','L. Portuguesa'],[0,2,6,'Luci','Arte'],[0,2,7,'Silvia','Or. de Estudos'],[0,2,8,'Carlos','Ed. Física'],[0,2,9,'Helio','História'],
+  [0,3,0,'Luci','Arte'],[0,3,1,'Carlos','Ed. Física'],[0,3,2,'Gilson','L. Portuguesa'],[0,3,3,'Santana','Geografia'],
+  [0,3,4,'Livia','L. Portuguesa'],[0,3,5,'Wallace','Ciências'],[0,3,6,'Rita','Matemática'],[0,3,7,'Sueli','L. Inglesa'],[0,3,8,'Silvia','Matemática'],[0,3,9,'Eliana','Or. de Estudos'],
+  [0,4,0,'Luci','Arte'],[0,4,1,'Carlos','Ed. Física'],[0,4,2,'Gilson','L. Portuguesa'],[0,4,3,'Santana','Geografia'],
+  [0,4,4,'Livia','L. Portuguesa'],[0,4,5,'Wallace','Ciências'],[0,4,6,'Rita','Matemática'],[0,4,7,'Sueli','L. Inglesa'],[0,4,8,'Silvia','Matemática'],[0,4,9,'Eliana','Or. de Estudos'],
+  [0,5,0,'Gilson','Eletiva'],[0,5,1,'Andrea','Eletiva'],[0,5,2,'Efigênia','Eletiva'],[0,5,3,'Carlos','Eletiva'],
+  [0,5,4,'Rita','Eletiva'],[0,5,5,'Livia','Eletiva'],[0,5,6,'Wallace','Eletiva'],[0,5,7,'Santana','Eletiva'],[0,5,8,'Silvia','Eletiva'],[0,5,9,'Eliana','Eletiva'],
+  [0,6,0,'Gilson','Eletiva'],[0,6,1,'Andrea','Eletiva'],[0,6,2,'Efigênia','Eletiva'],[0,6,3,'Carlos','Eletiva'],
+  [0,6,4,'Rita','Eletiva'],[0,6,5,'Livia','Eletiva'],[0,6,6,'Wallace','Eletiva'],[0,6,7,'Santana','Eletiva'],[0,6,8,'Silvia','Eletiva'],[0,6,9,'Eliana','Eletiva'],
+  // TERÇA (1)
+  [1,0,0,'Andrea','Ciências'],[1,0,1,'Efigênia','Matemática'],[1,0,2,'Santana','Proj. de Vida'],[1,0,3,'Rita','Matemática'],
+  [1,0,4,'Sueli','L. Inglesa'],[1,0,5,'Ana Paula','Geografia'],[1,0,6,'Livia','L. Portuguesa'],[1,0,7,'Carlos','Ed. Física'],[1,0,8,'Wallace','Tecnologia'],[1,0,9,'Eliana','L. Portuguesa'],
+  [1,1,0,'Andrea','Ciências'],[1,1,1,'Efigênia','Matemática'],[1,1,2,'Carlos','Ed. Física'],[1,1,3,'Santana','Proj. de Vida'],
+  [1,1,4,'Sueli','L. Inglesa'],[1,1,5,'Ana Paula','Geografia'],[1,1,6,'Livia','L. Portuguesa'],[1,1,7,'Rita','Matemática'],[1,1,8,'Wallace','Tecnologia'],[1,1,9,'Eliana','L. Portuguesa'],
+  [1,2,0,'Eliana','L. Portuguesa'],[1,2,1,'Santana','Geografia'],[1,2,2,'Carlos','Ed. Física'],[1,2,3,'Ana Paula','História'],
+  [1,2,4,'Efigênia','Or. de Estudos'],[1,2,5,'Livia','L. Portuguesa'],[1,2,6,'Gilson','Or. de Estudos'],[1,2,7,'Rita','Matemática'],[1,2,8,'Silvia','Matemática'],[1,2,9,'Helio','História'],
+  [1,3,0,'Eliana','L. Portuguesa'],[1,3,1,'Gilson','Red. e Leitura'],[1,3,2,'Efigênia','Matemática'],[1,3,3,'Carlos','Ed. Física'],
+  [1,3,4,'Rita','Matemática'],[1,3,5,'Wallace','Ciências'],[1,3,6,'Helio','História'],[1,3,7,'Livia','L. Portuguesa'],[1,3,8,'Ana Paula','Geografia'],[1,3,9,'Silvia','Matemática'],
+  [1,4,0,'Efigênia','Matemática'],[1,4,1,'Gilson','Red. e Leitura'],[1,4,2,'Andrea','Ciências'],[1,4,3,'Carlos','Ed. Física'],
+  [1,4,4,'Rita','Matemática'],[1,4,5,'Wallace','Ciências'],[1,4,6,'Helio','História'],[1,4,7,'Livia','L. Portuguesa'],[1,4,8,'Ana Paula','Geografia'],[1,4,9,'Silvia','Matemática'],
+  [1,5,0,'Sueli','L. Inglesa'],[1,5,1,'Luci','Arte'],[1,5,2,'Gilson','L. Portuguesa'],[1,5,3,'Andrea','Ciências'],
+  [1,5,4,'Carlos','Ed. Física'],[1,5,5,'Silvia','Ed. Financeira'],[1,5,6,'Rita','Matemática'],[1,5,7,'Ana Paula','Geografia'],[1,5,8,'Eliana','Or. de Estudos'],[1,5,9,'Wallace','Ciências'],
+  [1,6,0,'Sueli','L. Inglesa'],[1,6,1,'Luci','Arte'],[1,6,2,'Gilson','L. Portuguesa'],[1,6,3,'Andrea','Ciências'],
+  [1,6,4,'Carlos','Ed. Física'],[1,6,5,'Silvia','Ed. Financeira'],[1,6,6,'Rita','Matemática'],[1,6,7,'Ana Paula','Geografia'],[1,6,8,'Eliana','Or. de Estudos'],[1,6,9,'Wallace','Ciências'],
+  // QUARTA (2)
+  [2,0,0,'Efigênia','Matemática'],[2,0,1,'Sueli','L. Inglesa'],[2,0,2,'Gilson','Or. de Estudos'],[2,0,3,'Livia','L. Portuguesa'],
+  [2,0,4,'Andrea','Ciências'],[2,0,5,'Helio','História'],[2,0,6,'Rita','Matemática'],[2,0,7,'Carlos','Ed. Física'],[2,0,8,'Eliana','L. Portuguesa'],[2,0,9,'Ana Paula','Geografia'],
+  [2,1,0,'Efigênia','Matemática'],[2,1,1,'Sueli','L. Inglesa'],[2,1,2,'Gilson','Or. de Estudos'],[2,1,3,'Livia','L. Portuguesa'],
+  [2,1,4,'Andrea','Ciências'],[2,1,5,'Helio','História'],[2,1,6,'Wallace','Ciências'],[2,1,7,'Rita','Matemática'],[2,1,8,'Eliana','L. Portuguesa'],[2,1,9,'Carlos','Ed. Física'],
+  [2,2,0,'Eliana','Or. de Estudos'],[2,2,1,'Efigênia','Matemática'],[2,2,2,'Helio','História'],[2,2,3,'Santana','Geografia'],
+  [2,2,4,'Gilson','Or. de Estudos'],[2,2,5,'Silvia','Or. de Estudos'],[2,2,6,'Wallace','Ciências'],[2,2,7,'Rita','Matemática'],[2,2,8,'Ana Paula','Geografia'],[2,2,9,'Carlos','Ed. Física'],
+  [2,3,0,'Santana','Geografia'],[2,3,1,'Gilson','L. Portuguesa'],[2,3,2,'Andrea','Tecnologia'],[2,3,3,'Rita','Matemática'],
+  [2,3,4,'Efigênia','Ed. Financeira'],[2,3,5,'Sueli','L. Inglesa'],[2,3,6,'Ana Paula','Tecnologia'],[2,3,7,'Wallace','Ciências'],[2,3,8,'Carlos','Ed. Física'],[2,3,9,'Silvia','Or. de Estudos'],
+  [2,4,0,'Santana','Geografia'],[2,4,1,'Gilson','L. Portuguesa'],[2,4,2,'Andrea','Tecnologia'],[2,4,3,'Rita','Matemática'],
+  [2,4,4,'Efigênia','Ed. Financeira'],[2,4,5,'Sueli','L. Inglesa'],[2,4,6,'Ana Paula','Tecnologia'],[2,4,7,'Wallace','Ciências'],[2,4,8,'Helio','História'],[2,4,9,'Silvia','Or. de Estudos'],
+  [2,5,0,'Helio','História'],[2,5,1,'Santana','Geografia'],[2,5,2,'Efigênia','Matemática'],[2,5,3,'Ana Paula','História'],
+  [2,5,4,'Rita','Matemática'],[2,5,5,'Livia','L. Portuguesa'],[2,5,6,'Silvia','Ed. Financeira'],[2,5,7,'Gilson','Red. e Leitura'],[2,5,8,'Sueli','L. Inglesa'],[2,5,9,'Luci','Proj. de Vida'],
+  [2,6,0,'Helio','História'],[2,6,1,'Santana','Geografia'],[2,6,2,'Efigênia','Matemática'],[2,6,3,'Ana Paula','História'],
+  [2,6,4,'Rita','Matemática'],[2,6,5,'Livia','L. Portuguesa'],[2,6,6,'Silvia','Ed. Financeira'],[2,6,7,'Gilson','Red. e Leitura'],[2,6,8,'Sueli','L. Inglesa'],[2,6,9,'Luci','Arte'],
+  // QUINTA (3)
+  [3,0,0,'Efigênia','Matemática'],[3,0,1,'Gilson','L. Portuguesa'],[3,0,2,'Sueli','L. Inglesa'],[3,0,3,'Luci','Arte'],
+  [3,0,4,'Carlos','Tecnologia'],[3,0,5,'Livia','Red. e Leitura'],[3,0,6,'Ana Paula','Geografia'],[3,0,7,'Wallace','Ciências'],[3,0,8,'Helio','História'],[3,0,9,'Eliana','L. Portuguesa'],
+  [3,1,0,'Efigênia','Matemática'],[3,1,1,'Gilson','L. Portuguesa'],[3,1,2,'Sueli','L. Inglesa'],[3,1,3,'Luci','Arte'],
+  [3,1,4,'Carlos','Tecnologia'],[3,1,5,'Livia','Red. e Leitura'],[3,1,6,'Ana Paula','Geografia'],[3,1,7,'Wallace','Ciências'],[3,1,8,'Helio','História'],[3,1,9,'Eliana','L. Portuguesa'],
+  [3,2,0,'Eliana','L. Portuguesa'],[3,2,1,'Santana','Proj. de Vida'],[3,2,2,'Efigênia','Or. de Estudos'],[3,2,3,'Carlos','Tecnologia'],
+  [3,2,4,'Ana Paula','História'],[3,2,5,'Gilson','Or. de Estudos'],[3,2,6,'Silvia','Or. de Estudos'],[3,2,7,'Rita','Matemática'],[3,2,8,'Luci','Arte'],[3,2,9,'Helio','História'],
+  [3,3,0,'Eliana','L. Portuguesa'],[3,3,1,'Andrea','Tecnologia'],[3,3,2,'Efigênia','Or. de Estudos'],[3,3,3,'Carlos','Tecnologia'],
+  [3,3,4,'Luci','Arte'],[3,3,5,'Rita','Matemática'],[3,3,6,'Livia','Red. e Leitura'],[3,3,7,'Helio','História'],[3,3,8,'Wallace','Ciências'],[3,3,9,'Silvia','Matemática'],
+  [3,4,0,'Helio','História'],[3,4,1,'Andrea','Tecnologia'],[3,4,2,'Luci','Arte'],[3,4,3,'Efigênia','Or. de Estudos'],
+  [3,4,4,'Santana','Geografia'],[3,4,5,'Rita','Matemática'],[3,4,6,'Livia','Red. e Leitura'],[3,4,7,'Ana Paula','Geografia'],[3,4,8,'Wallace','Ciências'],[3,4,9,'Silvia','Matemática'],
+  [3,5,0,'Santana','Proj. de Vida'],[3,5,1,'Efigênia','Matemática'],[3,5,2,'Andrea','Ciências'],[3,5,3,'Gilson','Red. e Leitura'],
+  [3,5,4,'Livia','L. Portuguesa'],[3,5,5,'Ana Paula','Tecnologia'],[3,5,6,'Carlos','Ed. Física'],[3,5,7,'Luci','Proj. de Vida'],[3,5,8,'Silvia','Or. de Estudos'],[3,5,9,'Wallace','Ciências'],
+  [3,6,0,'Santana','Geografia'],[3,6,1,'Helio','História'],[3,6,2,'Andrea','Ciências'],[3,6,3,'Gilson','Red. e Leitura'],
+  [3,6,4,'Livia','L. Portuguesa'],[3,6,5,'Ana Paula','Tecnologia'],[3,6,6,'Carlos','Ed. Física'],[3,6,7,'Eliana','Or. de Estudos'],[3,6,8,'Silvia','Or. de Estudos'],[3,6,9,'Wallace','Ciências'],
+  // SEXTA (4)
+  [4,0,0,'Efigênia','Or. de Estudos'],[4,0,1,'Andrea','Ciências'],[4,0,2,'Gilson','Red. e Leitura'],[4,0,3,'Livia','Or. de Estudos'],
+  [4,0,4,'Santana','Geografia'],[4,0,5,'Ana Paula','Geografia'],[4,0,6,'Helio','História'],[4,0,7,'Luci','Arte'],[4,0,8,'Silvia','Matemática'],[4,0,9,'Eliana','Red. e Leitura'],
+  [4,1,0,'Efigênia','Or. de Estudos'],[4,1,1,'Helio','História'],[4,1,2,'Gilson','Red. e Leitura'],[4,1,3,'Andrea','Ciências'],
+  [4,1,4,'Ana Paula','Proj. de Vida'],[4,1,5,'Carlos','Ed. Física'],[4,1,6,'Luci','Proj. de Vida'],[4,1,7,'Wallace','Tecnologia'],[4,1,8,'Silvia','Matemática'],[4,1,9,'Eliana','Red. e Leitura'],
+  [4,2,0,'Eliana','Or. de Estudos'],[4,2,1,'Helio','História'],[4,2,2,'Santana','Geografia'],[4,2,3,'Sueli','L. Inglesa'],
+  [4,2,4,'Andrea','Ciências'],[4,2,5,'Carlos','Ed. Física'],[4,2,6,'Ana Paula','Geografia'],[4,2,7,'Wallace','Tecnologia'],[4,2,8,'Luci','Proj. de Vida'],[4,2,9,'Silvia','Matemática'],
+  [4,3,0,'Carlos','Ed. Física'],[4,3,1,'Gilson','Or. de Estudos'],[4,3,2,'Santana','Geografia'],[4,3,3,'Efigênia','Ed. Financeira'],
+  [4,3,4,'Eliana','Red. e Leitura'],[4,3,5,'Rita','Matemática'],[4,3,6,'Livia','L. Portuguesa'],[4,3,7,'Silvia','Ed. Financeira'],[4,3,8,'Wallace','Ciências'],[4,3,9,'Ana Paula','Geografia'],
+  [4,4,0,'Carlos','Ed. Física'],[4,4,1,'Gilson','Or. de Estudos'],[4,4,2,'Luci','Arte'],[4,4,3,'Efigênia','Ed. Financeira'],
+  [4,4,4,'Eliana','Red. e Leitura'],[4,4,5,'Helio','História'],[4,4,6,'Livia','L. Portuguesa'],[4,4,7,'Silvia','Ed. Financeira'],[4,4,8,'Wallace','Ciências'],[4,4,9,'Ana Paula','Geografia'],
+  [4,5,0,'Andrea','Tecnologia'],[4,5,1,'Efigênia','Or. de Estudos'],[4,5,2,'Helio','História'],[4,5,3,'Rita','Matemática'],
+  [4,5,4,'Ana Paula','História'],[4,5,5,'Luci','Arte'],[4,5,6,'Sueli','L. Inglesa'],[4,5,7,'Livia','L. Portuguesa'],[4,5,8,'Eliana','Red. e Leitura'],[4,5,9,'Wallace','Tecnologia'],
+  [4,6,0,'Andrea','Tecnologia'],[4,6,1,'Efigênia','Or. de Estudos'],[4,6,2,'Helio','História'],[4,6,3,'Rita','Matemática'],
+  [4,6,4,'Ana Paula','História'],[4,6,5,'Luci','Proj. de Vida'],[4,6,6,'Sueli','L. Inglesa'],[4,6,7,'Livia','L. Portuguesa'],[4,6,8,'Eliana','Red. e Leitura'],[4,6,9,'Wallace','Tecnologia'],
+];
+
+// ═══════════════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════════════
+let currentSection = 'em';
+let emSchedule = {}, afSchedule = {};
+let history = [];
+let subData = {}; // key: `${section}-${d}-${p}-${c}` → {teacher,reason}
+let currentView = 'turma';
+let selectedClass = {'em':'1°A','af':'6°A'};
+let selectedTeacher = {'em':'','af':''};
+let selectedSubject = {'em':'','af':''};
+let editMode = false;
+let subMode = false;
+let editTarget = null;
+let darkMode = false;
+let searchQuery = '';
+
+function buildSched(raw, nClasses){
+  const s = {};
+  for(let d=0;d<5;d++){s[d]={};for(let p=0;p<7;p++){s[d][p]={};}}
+  raw.forEach(([d,p,c,t,sub])=>{ s[d][p][c]={teacher:t,subject:sub}; });
+  return s;
+}
+
+// ── SECTION HELPERS ──
+function getCls(){ return currentSection==='em'?EM_CLASSES:AF_CLASSES; }
+function getSched(){ return currentSection==='em'?emSchedule:afSchedule; }
+function getDays(){ return currentSection==='em'?EM_DAYS_SHORT:AF_DAYS_SHORT; }
+function getSelClass(){ return selectedClass[currentSection]; }
+function getSelTeacher(){ return selectedTeacher[currentSection]; }
+function getSelSubject(){ return selectedSubject[currentSection]; }
+
+// ── SUBSTITUTION HELPERS ──
+function subKey(d,p,c){ return `${currentSection}-${d}-${p}-${c}`; }
+function getSub(d,p,c){ return subData[subKey(d,p,c)]; }
+function setSub(d,p,c,data){ subData[subKey(d,p,c)]=data; saveToStorage(); }
+function clearSub(d,p,c){ delete subData[subKey(d,p,c)]; saveToStorage(); }
+function getSubKeyBySection(section){ return Object.keys(subData).filter(k=>k.startsWith(section+'-')); }
+
+// ── COLOR ──
+function getColorClass(subject){
+  if(!subject) return 'misc';
+  const s=subject.toLowerCase();
+  if(s.includes('matemát')||s.includes('mat. aplic')) return 'mat';
+  if(s.includes('portuguesa')||s.includes('redação')||s.includes('red. e ')||s.includes('l. port')) return 'port';
+  if(s.includes('histór')) return 'hist';
+  if(s.includes('física')&&!s.includes('ed. fís')) return 'fis';
+  if(s.includes('biolog')) return 'bio';
+  if(s.includes('quím')) return 'qui';
+  if(s.includes('geograf')) return 'geo';
+  if(s.includes('filoso')||s.includes('filo')) return 'filo';
+  if(s.includes('arte')) return 'arte';
+  if(s.includes('ed. fís')||s.includes('educação fís')) return 'ef';
+  if(s.includes('inglesa')||s.includes('inglês')) return 'ing';
+  if(s.includes('sociolog')) return 'soc';
+  if(s.includes('ciência')) return 'bio';
+  if(s.includes('prog.')||s.includes('programação')||s.includes('log.')||s.includes('mod. design')||
+     s.includes('proc. design')||s.includes('vers.')||s.includes('front')||s.includes('back')||
+     s.includes('mobile')||s.includes('intel. artif')||s.includes('multidisciplinar')||s.includes('tecnologia')) return 'tech';
+  if(s.includes('adm')||s.includes('gestão')||s.includes('com. emp')||s.includes('marketing')||
+     s.includes('inovação')||s.includes('carreira')||s.includes('liderança')) return 'adm';
+  if(s.includes('eletiva')) return 'el';
+  if(s.includes('financ')||s.includes('ed. fin')) return 'fin';
+  return 'misc';
+}
+
+// ── STORAGE ──
+function saveToStorage(){
+  try{
+    localStorage.setItem('simioni_em',JSON.stringify(emSchedule));
+    localStorage.setItem('simioni_af',JSON.stringify(afSchedule));
+    localStorage.setItem('simioni_subs',JSON.stringify(subData));
+  }catch(e){}
+}
+function loadFromStorage(){
+  try{
+    const em=localStorage.getItem('simioni_em');
+    const af=localStorage.getItem('simioni_af');
+    const sb=localStorage.getItem('simioni_subs');
+    if(em) emSchedule=JSON.parse(em);
+    if(af) afSchedule=JSON.parse(af);
+    if(sb) subData=JSON.parse(sb);
+  }catch(e){}
+}
+
+// ── CONFLICT DETECTION ──
+function findConflicts(){
+  const s=getSched(), cls=getCls();
+  const conflicts=new Set();
+  for(let d=0;d<5;d++) for(let p=0;p<7;p++){
+    const tm={};
+    for(let c=0;c<cls.length;c++){
+      const cell=s[d][p][c]; if(!cell||!cell.teacher) continue;
+      // Check substitution teacher too
+      const sub=getSub(d,p,c);
+      const t=(sub?sub.teacher:cell.teacher).trim().toLowerCase();
+      if(!t) continue;
+      if(tm[t]!==undefined){conflicts.add(`${d}-${p}-${c}`);conflicts.add(`${d}-${p}-${tm[t]}`);} else tm[t]=c;
+    }
+  }
+  return conflicts;
+}
+
+// ── UNIQUE VALUES ──
+function getTeachers(){
+  const s=getSched(),cls=getCls(),set=new Set();
+  cls.forEach((_,ci)=>{
+    for(let d=0;d<5;d++) for(let p=0;p<7;p++){
+      const cell=s[d][p][ci];if(cell&&cell.teacher)set.add(cell.teacher);
+    }
+  });
+  // Also substitutes
+  Object.keys(subData).filter(k=>k.startsWith(currentSection+'-')).forEach(k=>{if(subData[k]&&subData[k].teacher)set.add(subData[k].teacher);});
+  return [...set].sort();
+}
+function getSubjects(){
+  const s=getSched(),cls=getCls(),set=new Set();
+  cls.forEach((_,ci)=>{
+    for(let d=0;d<5;d++) for(let p=0;p<7;p++){const cell=s[d][p][ci];if(cell&&cell.subject)set.add(cell.subject);}
+  });
+  return [...set].sort();
+}
+
+// ═══════════════════════════════════════════════════════
+//  RENDER CELL
+// ═══════════════════════════════════════════════════════
+function renderCell(d, p, c, conflicts){
+  const s=getSched();
+  const cell=s[d][p][c];
+  const sub=getSub(d,p,c);
+  const key=`${d}-${p}-${c}`;
+  const isConflict=conflicts&&conflicts.has(key);
+  const hasSub=!!sub;
+  const isEmpty=!cell||(!cell.subject&&!cell.teacher);
+  const cls=cell?getColorClass(cell.subject):'';
+  
+  let inner='';
+  if(!isEmpty||hasSub){
+    inner=`<div class="lesson-card ${cls}">
+      ${hasSub?`<div class="sub-badge">SUB</div>`:''}
+      <div class="lesson-subject">${cell?cell.subject||'':''}</div>
+      <div class="lesson-teacher ${hasSub?'strike':''}">👤 ${cell?cell.teacher||'':''}</div>
+      ${hasSub?`<div class="lesson-sub-teacher">👤 ${sub.teacher}</div>`:''}
+      ${hasSub&&sub.reason?`<div class="lesson-sub-reason">📝 ${sub.reason}</div>`:''}
+    </div>`;
+  }
+  
+  return `<div class="grid-cell ${isConflict?'conflict':''} ${hasSub?'has-sub':''} ${editMode||subMode?'editable':''}"
+    data-d="${d}" data-p="${p}" data-c="${c}"
+    draggable="${editMode}"
+    ondragstart="onDragStart(event)"
+    ondragover="onDragOver(event)"
+    ondrop="onDrop(event)"
+    onclick="onCellClick(${d},${p},${c})"
+    title="${hasSub?`Substituição: ${sub.teacher}${sub.reason?' — '+sub.reason:''}`:editMode?'Clique para editar':''}">
+    ${inner}
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════════
+//  TURMA VIEW
+// ═══════════════════════════════════════════════════════
+function renderTurmaView(){
+  const cls=getCls(); const sched=getSched();
+  const cIdx=cls.indexOf(getSelClass());
+  if(cIdx<0) return '<div class="empty-state"><div class="empty-state-icon">📋</div><div class="empty-state-text">Selecione uma turma</div></div>';
+  const conflicts=findConflicts();
+  
+  // Stats
+  let total=0, teachers=new Set(), subjects=new Set(), subCount=0;
+  for(let d=0;d<5;d++) for(let p=0;p<7;p++){
+    const cell=sched[d][p][cIdx];
+    if(cell&&cell.subject){total++;teachers.add(cell.teacher);subjects.add(cell.subject);}
+    if(getSub(d,p,cIdx)) subCount++;
+  }
+  
+  const isAF=currentSection==='af';
+  const valColor=isAF?'af':'';
+  
+  let html=`<div class="stats-bar">
+    <div class="stat-chip"><div class="stat-chip-value ${valColor}">${total}</div><div class="stat-chip-label">Aulas/semana</div></div>
+    <div class="stat-chip"><div class="stat-chip-value ${valColor}">${teachers.size}</div><div class="stat-chip-label">Professores</div></div>
+    <div class="stat-chip"><div class="stat-chip-value ${valColor}">${subjects.size}</div><div class="stat-chip-label">Disciplinas</div></div>
+    <div class="stat-chip"><div class="stat-chip-value" style="color:var(--sub-color)">${subCount}</div><div class="stat-chip-label">Substituições</div></div>
+  </div>`;
+  
+  // Class tabs
+  html+='<div class="tab-strip">';
+  cls.forEach(c=>{ html+=`<button class="tab-btn ${c===getSelClass()?'active':''}" onclick="selectClass('${c}')">${c}</button>`; });
+  html+='</div>';
+  
+  // Legend
+  html+=renderLegend(cIdx);
+  
+  // Get period rows
+  const periods=isAF?getAfPeriods(cIdx<AF_EARLY_LUNCH):EM_PERIODS;
+  
+  html+=`<div class="schedule-grid" style="display:grid;grid-template-columns:88px repeat(5,1fr)">`;
+  html+=`<div class="grid-corner">Aula / Dia</div>`;
+  getDays().forEach(d=>{ html+=`<div class="grid-day-header">${d}</div>`; });
+  
+  periods.forEach(period=>{
+    if(period.isBreak){
+      html+=`<div class="grid-period-header" style="background:#334155;font-size:10px;color:rgba(255,255,255,.35)">${period.label}</div>`;
+      for(let d=0;d<5;d++) html+=`<div class="grid-break">${period.label}${period.time?` · ${period.time}`:''}</div>`;
+      return;
+    }
+    html+=`<div class="grid-period-header"><span class="period-num">${period.num}</span><span class="period-time">${period.time}</span></div>`;
+    for(let d=0;d<5;d++) html+=renderCell(d, period.pi, cIdx, conflicts);
+  });
+  html+='</div>';
+  return html;
+}
+
+function renderLegend(cIdx){
+  const sched=getSched(),seen=new Map();
+  for(let d=0;d<5;d++) for(let p=0;p<7;p++){
+    const cell=sched[d][p][cIdx];
+    if(cell&&cell.subject&&!seen.has(cell.subject)) seen.set(cell.subject,getColorClass(cell.subject));
+  }
+  const colorHex={mat:'#3b82f6',port:'#10b981',hist:'#f59e0b',fis:'#8b5cf6',bio:'#22c55e',qui:'#06b6d4',
+    geo:'#f97316',filo:'#6366f1',arte:'#ec4899',ef:'#ef4444',ing:'#0ea5e9',soc:'#a855f7',
+    tech:'#64748b',adm:'#d97706',el:'#94a3b8',fin:'#84cc16',misc:'#0f766e'};
+  let html='<div class="legend">';
+  seen.forEach((c,sub)=>{ html+=`<div class="legend-item"><div class="legend-dot" style="background:${colorHex[c]||'#64748b'}"></div>${sub}</div>`; });
+  html+='</div>';
+  return html;
+}
+
+// ═══════════════════════════════════════════════════════
+//  PROFESSOR VIEW
+// ═══════════════════════════════════════════════════════
+function renderProfessorView(){
+  const sched=getSched(),cls=getCls();
+  const teachers=getTeachers();
+  if(!getSelTeacher()) selectedTeacher[currentSection]=teachers[0]||'';
+  const sel=getSelTeacher();
+  
+  const lessons=[];
+  for(let d=0;d<5;d++) for(let p=0;p<7;p++) for(let c=0;c<cls.length;c++){
+    const cell=sched[d][p][c];
+    const sub=getSub(d,p,c);
+    // Include if regular teacher OR substitute teacher matches
+    if((cell&&cell.teacher===sel)||(sub&&sub.teacher===sel)){
+      lessons.push({d,p,c,cell,sub});
+    }
+  }
+  
+  const isAF=currentSection==='af';
+  const isSubTeacher=lessons.some(x=>x.sub&&x.sub.teacher===sel&&(!x.cell||x.cell.teacher!==sel));
+  
+  let html=`<div class="stats-bar">
+    <div class="stat-chip"><div class="stat-chip-value ${isAF?'af':''}">${lessons.length}</div><div class="stat-chip-label">Aulas/semana</div></div>
+    <div class="stat-chip"><div class="stat-chip-value ${isAF?'af':''}">${(lessons.length*50/60).toFixed(0)}h</div><div class="stat-chip-label">Carga horária</div></div>
+    <div class="stat-chip"><div class="stat-chip-value ${isAF?'af':''}">${new Set(lessons.map(x=>cls[x.c])).size}</div><div class="stat-chip-label">Turmas</div></div>
+    <div class="stat-chip"><div class="stat-chip-value" style="color:var(--sub-color)">${lessons.filter(x=>x.sub).length}</div><div class="stat-chip-label">Substituições</div></div>
+  </div>`;
+  
+  html+='<div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px">';
+  teachers.forEach(t=>{ html+=`<button class="tab-btn ${t===sel?'active':''}" style="flex:0 1 auto;min-width:70px" onclick="selectTeacher('${t.replace(/'/g,"\\'")}')">${t}</button>`; });
+  html+='</div>';
+  
+  html+='<div class="teacher-grid">';
+  getDays().forEach((day,di)=>{
+    const dayLessons=lessons.filter(x=>x.d===di).sort((a,b)=>a.p-b.p);
+    html+=`<div class="teacher-day-col"><div class="teacher-day-header">${day}</div>`;
+    if(!dayLessons.length) html+='<div class="teacher-lesson" style="color:var(--text3);font-size:11.5px;font-style:italic;padding:10px 12px">Sem aulas</div>';
+    dayLessons.forEach(({p,c,cell,sub})=>{
+      const periods=isAF?getAfPeriods(c<AF_EARLY_LUNCH):EM_PERIODS;
+      const pRow=periods.find(x=>!x.isBreak&&x.pi===p);
+      const hasSub=!!sub;
+      const colorC=cell?getColorClass(cell.subject):'el';
+      html+=`<div class="teacher-lesson ${hasSub?'has-sub':''}" onclick="onCellClick(${di},${p},${c})">
+        <div class="teacher-lesson-time">${pRow?pRow.time:''}${hasSub?'<span class="teacher-sub-badge">SUB</span>':''}</div>
+        <div class="teacher-lesson-class">${cls[c]}</div>
+        <div class="lesson-badge ${colorC}" style="display:inline-block;color:#fff;font-size:9.5px;padding:2px 7px;border-radius:10px;margin-top:2px;background:var(--c-${colorC},#64748b)">${cell?cell.subject:''}</div>
+        ${hasSub?`<div style="font-size:10px;color:var(--sub-color);margin-top:2px">↩ ${sub.teacher}${sub.reason?' · '+sub.reason:''}</div>`:''}
+      </div>`;
+    });
+    html+='</div>';
+  });
+  html+='</div>';
+  return html;
+}
+
+// ═══════════════════════════════════════════════════════
+//  DISCIPLINA VIEW
+// ═══════════════════════════════════════════════════════
+function renderDisciplinaView(){
+  const subjects=getSubjects(),sched=getSched(),cls=getCls();
+  if(!getSelSubject()) selectedSubject[currentSection]=subjects[0]||'';
+  const sel=getSelSubject();
+  
+  let html='<div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px">';
+  subjects.forEach(s=>{ html+=`<button class="tab-btn ${s===sel?'active':''}" style="flex:0 1 auto;min-width:70px" onclick="selectSubject('${s.replace(/'/g,"\\'")}')">${s}</button>`; });
+  html+='</div>';
+  
+  const entries=[];
+  for(let d=0;d<5;d++) for(let p=0;p<7;p++) for(let c=0;c<cls.length;c++){
+    const cell=sched[d][p][c];
+    if(cell&&cell.subject===sel) entries.push({d,p,c,cell,sub:getSub(d,p,c)});
+  }
+  
+  const isAF=currentSection==='af';
+  html+=`<div class="stats-bar">
+    <div class="stat-chip"><div class="stat-chip-value ${isAF?'af':''}">${entries.length}</div><div class="stat-chip-label">Ocorrências</div></div>
+    <div class="stat-chip"><div class="stat-chip-value ${isAF?'af':''}">${new Set(entries.map(x=>x.cell.teacher)).size}</div><div class="stat-chip-label">Professores</div></div>
+    <div class="stat-chip"><div class="stat-chip-value ${isAF?'af':''}">${new Set(entries.map(x=>cls[x.c])).size}</div><div class="stat-chip-label">Turmas</div></div>
+    <div class="stat-chip"><div class="stat-chip-value" style="color:var(--sub-color)">${entries.filter(x=>x.sub).length}</div><div class="stat-chip-label">Com substituição</div></div>
+  </div>`;
+  
+  html+='<div class="cards-grid">';
+  cls.forEach((c,ci)=>{
+    const cEntries=entries.filter(x=>x.c===ci); if(!cEntries.length) return;
+    const teacher=[...new Set(cEntries.map(x=>x.cell.teacher))].join(', ');
+    html+=`<div class="info-card"><div class="info-card-header">
+      <div class="info-card-icon" style="background:var(--amber)">📚</div>
+      <div><div class="info-card-title">${c}</div><div class="info-card-sub">👤 ${teacher}</div></div>
+    </div><div class="info-card-rows">`;
+    cEntries.sort((a,b)=>a.d-b.d||a.p-b.p).forEach(({d,p,sub})=>{
+      const periods=isAF?getAfPeriods(ci<AF_EARLY_LUNCH):EM_PERIODS;
+      const pRow=periods.find(x=>!x.isBreak&&x.pi===p);
+      html+=`<div class="info-card-row ${sub?'is-sub':''}">
+        <span class="info-card-row-label">${getDays()[d]}${sub?` <span style="color:var(--sub-color);font-size:9px">SUB</span>`:''}</span>
+        <span class="info-card-row-value">${pRow?pRow.num+' · '+pRow.time:''}</span>
+      </div>`;
+    });
+    html+='</div></div>';
+  });
+  html+='</div>';
+  return html;
+}
+
+// ═══════════════════════════════════════════════════════
+//  SUBSTITUIÇÕES VIEW
+// ═══════════════════════════════════════════════════════
+function renderSubstituicoesView(){
+  const cls=getCls(),sched=getSched();
+  const secKeys=getSubKeyBySection(currentSection);
+  const isAF=currentSection==='af';
+  
+  let html=`<div class="stats-bar">
+    <div class="stat-chip"><div class="stat-chip-value" style="color:var(--sub-color)">${secKeys.length}</div><div class="stat-chip-label">Substituições ativas</div></div>
+    <div class="stat-chip"><div class="stat-chip-value" style="color:var(--sub-color)">${new Set(secKeys.map(k=>{const[,d,p,c]=k.split('-');return c;})).size}</div><div class="stat-chip-label">Turmas afetadas</div></div>
+  </div>`;
+  
+  if(secKeys.length===0){
+    html+=`<div class="sub-panel">
+      <div style="text-align:center;padding:30px;color:var(--text3)">
+        <div style="font-size:36px;margin-bottom:10px">✅</div>
+        <div style="font-size:14px;font-weight:600">Nenhuma substituição ativa</div>
+        <div style="font-size:12px;margin-top:5px">Ative o modo Substituição e clique em uma aula para marcar</div>
+      </div>
+    </div>`;
+    html+=`<div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)">
+      <div style="font-size:13px;color:var(--text2);line-height:1.7">
+        <strong style="color:var(--text)">Como registrar uma substituição:</strong><br>
+        1. Clique em <span style="background:var(--sub-color);color:#fff;padding:2px 8px;border-radius:6px;font-size:11px">🔄 Substituição</span> no menu superior<br>
+        2. Clique na aula onde ocorreu a substituição<br>
+        3. Informe o nome do professor substituto e o motivo<br>
+        4. A aula aparecerá destacada em laranja em toda a aplicação
+      </div>
+    </div>`;
+    return html;
+  }
+  
+  // Group by day
+  const byDay={};
+  secKeys.forEach(k=>{
+    const parts=k.split('-');
+    const sec=parts[0],d=+parts[1],p=+parts[2],c=+parts[3];
+    if(!byDay[d]) byDay[d]=[];
+    byDay[d].push({d,p,c,sub:subData[k],key:k});
+  });
+  
+  [0,1,2,3,4].forEach(di=>{
+    if(!byDay[di]) return;
+    html+=`<div class="sub-panel">
+      <div class="sub-panel-header">
+        <div class="sub-panel-title">📅 ${getDays()[di]}</div>
+        <div class="sub-panel-count">${byDay[di].length}</div>
+      </div>
+      <div class="sub-list">`;
+    byDay[di].sort((a,b)=>a.p-b.p||a.c-b.c).forEach(({d,p,c,sub,key})=>{
+      const sched2=getSched();
+      const cell=sched2[d][p][c];
+      const cIdx=c;
+      const periods=isAF?getAfPeriods(cIdx<AF_EARLY_LUNCH):EM_PERIODS;
+      const pRow=periods.find(x=>!x.isBreak&&x.pi===p);
+      html+=`<div class="sub-item">
+        <div class="sub-item-info">
+          <div class="sub-item-main">${cls[c]} · ${pRow?pRow.num+' ('+pRow.time+')':''}</div>
+          <div class="sub-item-detail">Titular: 👤 ${cell?cell.teacher:''} → <span style="color:var(--sub-color);font-weight:600">Substituto: ${sub.teacher}</span></div>
+          ${sub.reason?`<div class="sub-item-reason">📝 ${sub.reason}</div>`:''}
+        </div>
+        <button class="sub-item-remove" onclick="removeSub('${key}')">✕ Remover</button>
+      </div>`;
+    });
+    html+='</div></div>';
+  });
+  return html;
+}
+
+// ═══════════════════════════════════════════════════════
+//  BUSCA VIEW
+// ═══════════════════════════════════════════════════════
+function renderBuscaView(){
+  const q=searchQuery.trim().toLowerCase();
+  const sched=getSched(),cls=getCls();
+  let html=`<div style="text-align:center;padding:16px 0 20px;font-size:14px;color:var(--text2)">
+    ${q?`Resultados para "<strong>${searchQuery}</strong>":` :'Digite na barra de busca acima para pesquisar'}
+  </div>`;
+  if(!q) return html;
+  
+  const results=[];
+  for(let d=0;d<5;d++) for(let p=0;p<7;p++) for(let c=0;c<cls.length;c++){
+    const cell=sched[d][p][c];const sub=getSub(d,p,c);
+    if(!cell) continue;
+    const searchStr=((cell.teacher||'')+(cell.subject||'')+cls[c]+(sub?sub.teacher+sub.reason:'') ).toLowerCase();
+    if(searchStr.includes(q)) results.push({d,p,c,cell,sub});
+  }
+  
+  if(!results.length) return html+`<div class="empty-state"><div class="empty-state-icon">🔍</div><div class="empty-state-text">Nenhum resultado</div></div>`;
+  
+  html+=`<div style="margin-bottom:10px;font-size:12.5px;color:var(--text2)">${results.length} resultado(s)</div>`;
+  const isAF=currentSection==='af';
+  html+='<div class="cards-grid">';
+  results.forEach(({d,p,c,cell,sub})=>{
+    const periods=isAF?getAfPeriods(c<AF_EARLY_LUNCH):EM_PERIODS;
+    const pRow=periods.find(x=>!x.isBreak&&x.pi===p);
+    const col=getColorClass(cell.subject);
+    html+=`<div class="info-card ${sub?'':''}` + `" style="cursor:pointer${sub?';border-left:3px solid var(--sub-color)':''}" onclick="onSearchResultClick(${d},${p},${c})">
+      <div class="info-card-header">
+        <div class="info-card-icon ${col}" style="background:var(--bg);font-size:18px">${cell.subject?cell.subject[0]:'?'}</div>
+        <div><div class="info-card-title">${cell.subject}${sub?` <span style="color:var(--sub-color);font-size:10px">[SUB]</span>`:''}</div>
+        <div class="info-card-sub">👤 ${cell.teacher}${sub?` → ${sub.teacher}`:''}</div></div>
+      </div>
+      <div class="info-card-rows">
+        <div class="info-card-row"><span class="info-card-row-label">Turma</span><span class="info-card-row-value">${cls[c]}</span></div>
+        <div class="info-card-row"><span class="info-card-row-label">Dia</span><span class="info-card-row-value">${getDays()[d]}</span></div>
+        <div class="info-card-row"><span class="info-card-row-label">Horário</span><span class="info-card-row-value">${pRow?pRow.num+' · '+pRow.time:''}</span></div>
+        ${sub&&sub.reason?`<div class="info-card-row is-sub"><span class="info-card-row-label">Motivo</span><span class="info-card-row-value">${sub.reason}</span></div>`:''}
+      </div>
+    </div>`;
+  });
+  html+='</div>';
+  return html;
+}
+
+// ═══════════════════════════════════════════════════════
+//  RENDER MAIN
+// ═══════════════════════════════════════════════════════
+function render(){
+  const el=document.getElementById('mainContent');
+  switch(currentView){
+    case 'turma': el.innerHTML=renderTurmaView(); break;
+    case 'professor': el.innerHTML=renderProfessorView(); break;
+    case 'disciplina': el.innerHTML=renderDisciplinaView(); break;
+    case 'substituicoes': el.innerHTML=renderSubstituicoesView(); break;
+    case 'busca': el.innerHTML=renderBuscaView(); break;
+    default: el.innerHTML=renderTurmaView();
+  }
+  populateFilters();
+  updateSidebarClasses();
+}
+
+function updateSidebarClasses(){
+  const cls=getCls();
+  const icons=['🔵','🔵','🔵','🟢','🟠','🟣','🟣','🔴','🔴','🟤'];
+  let html='';
+  cls.forEach((c,i)=>{ html+=`<div class="nav-item ${c===getSelClass()&&currentView==='turma'?(currentSection==='af'?'af-active':'active'):''}" data-view="turma" data-class="${c}"><span class="nav-icon">${icons[i]||'⚪'}</span> ${c}</div>`; });
+  document.getElementById('classNavItems').innerHTML=html;
+  document.getElementById('classNavLabel').textContent=currentSection==='em'?'Ensino Médio':'Anos Finais — Turmas';
+  // re-bind nav items
+  document.querySelectorAll('#classNavItems .nav-item').forEach(item=>{
+    item.addEventListener('click',()=>{
+      const c=item.dataset.class;
+      if(c){ selectedClass[currentSection]=c; }
+      currentView='turma'; searchQuery=''; document.getElementById('globalSearch').value='';
+      updateNavActive(); render();
+      document.getElementById('sidebar').classList.remove('open');
+    });
+  });
+}
+
+function populateFilters(){
+  const fc=document.getElementById('filterClass'),ft=document.getElementById('filterTeacher'),fs=document.getElementById('filterSubject');
+  const teachers=getTeachers(),subjects=getSubjects(),cls=getCls();
+  fc.innerHTML='<option value="">Todas as turmas</option>'+cls.map(c=>`<option ${c===getSelClass()?'selected':''}>${c}</option>`).join('');
+  ft.innerHTML='<option value="">Todos os professores</option>'+teachers.map(t=>`<option ${t===getSelTeacher()?'selected':''}>${t}</option>`).join('');
+  fs.innerHTML='<option value="">Todas as disciplinas</option>'+subjects.map(s=>`<option ${s===getSelSubject()?'selected':''}>${s}</option>`).join('');
+  const sl=document.getElementById('subjectList'),tl=document.getElementById('teacherList');
+  sl.innerHTML=subjects.map(s=>`<option value="${s}">`).join('');
+  tl.innerHTML=teachers.map(t=>`<option value="${t}">`).join('');
+}
+
+// ═══════════════════════════════════════════════════════
+//  INTERACTIONS
+// ═══════════════════════════════════════════════════════
+function setSection(sec){
+  currentSection=sec;
+  currentView='turma';
+  searchQuery=''; document.getElementById('globalSearch').value='';
+  document.getElementById('secEM').classList.toggle('active',sec==='em');
+  document.getElementById('secAF').classList.toggle('active',sec==='af');
+  const title=document.getElementById('topbarTitle');
+  title.innerHTML=sec==='em'?'Horários <span>Ensino Médio</span>':'Horários <span class="af">Anos Finais (EFAF)</span>';
+  updateNavActive(); render();
+}
+
+function selectClass(c){ selectedClass[currentSection]=c; render(); }
+function selectTeacher(t){ selectedTeacher[currentSection]=t; render(); }
+function selectSubject(s){ selectedSubject[currentSection]=s; render(); }
+
+function removeSub(key){
+  delete subData[key]; saveToStorage(); render(); toast('🔄 Substituição removida');
+}
+
+function onCellClick(d,p,c){
+  if(!editMode&&!subMode) return;
+  openEditModal(d,p,c);
+}
+function onSearchResultClick(d,p,c){
+  currentView='turma'; selectedClass[currentSection]=getCls()[c]; render(); updateNavActive();
+  setTimeout(()=>{ if(editMode||subMode) openEditModal(d,p,c); },80);
+}
+
+// ── DRAG & DROP ──
+let dragSrc=null;
+function onDragStart(e){ dragSrc={d:+e.currentTarget.dataset.d,p:+e.currentTarget.dataset.p,c:+e.currentTarget.dataset.c}; e.dataTransfer.effectAllowed='move'; }
+function onDragOver(e){ e.preventDefault(); e.dataTransfer.dropEffect='move'; }
+function onDrop(e){
+  e.preventDefault(); if(!dragSrc||!editMode) return;
+  const dst={d:+e.currentTarget.dataset.d,p:+e.currentTarget.dataset.p,c:+e.currentTarget.dataset.c};
+  if(dragSrc.d===dst.d&&dragSrc.p===dst.p&&dragSrc.c===dst.c) return;
+  const s=getSched();
+  const prev=JSON.parse(JSON.stringify({em:emSchedule,af:afSchedule,subs:subData}));
+  history.push(prev);
+  // swap cells
+  const a=s[dragSrc.d][dragSrc.p][dragSrc.c],b=s[dst.d][dst.p][dst.c];
+  s[dragSrc.d][dragSrc.p][dragSrc.c]=b; s[dst.d][dst.p][dst.c]=a;
+  // swap subs
+  const sk1=subKey.call({currentSection},dragSrc.d,dragSrc.p,dragSrc.c);
+  // simpler: rebuild subKey with correct section
+  const subA=subData[`${currentSection}-${dragSrc.d}-${dragSrc.p}-${dragSrc.c}`];
+  const subB=subData[`${currentSection}-${dst.d}-${dst.p}-${dst.c}`];
+  if(subA) subData[`${currentSection}-${dst.d}-${dst.p}-${dst.c}`]=subA; else delete subData[`${currentSection}-${dst.d}-${dst.p}-${dst.c}`];
+  if(subB) subData[`${currentSection}-${dragSrc.d}-${dragSrc.p}-${dragSrc.c}`]=subB; else delete subData[`${currentSection}-${dragSrc.d}-${dragSrc.p}-${dragSrc.c}`];
+  saveToStorage(); render(); enableUndo(); toast('✅ Aulas trocadas!'); dragSrc=null;
+}
+
+// ═══════════════════════════════════════════════════════
+//  EDIT MODAL
+// ═══════════════════════════════════════════════════════
+function openEditModal(d,p,c){
+  editTarget={d,p,c};
+  const sched=getSched();
+  const cell=sched[d][p][c]||{teacher:'',subject:''};
+  const sub=getSub(d,p,c);
+  const cls=getCls();
+  const isAF=currentSection==='af';
+  const periods=isAF?getAfPeriods(c<AF_EARLY_LUNCH):EM_PERIODS;
+  const pRow=periods.find(x=>!x.isBreak&&x.pi===p);
+  
+  document.getElementById('modalSub').textContent=`${getDays()[d]} · ${pRow?pRow.num+' · '+pRow.time:''} · Turma ${cls[c]}`;
+  document.getElementById('modalSubject').value=cell.subject||'';
+  document.getElementById('modalTeacher').value=cell.teacher||'';
+  
+  const isSub=!!sub;
+  document.getElementById('modalIsSub').checked=isSub;
+  document.getElementById('modalSubFields').style.display=isSub?'block':'none';
+  document.getElementById('modalSubTeacher').value=sub?sub.teacher:'';
+  document.getElementById('modalSubReason').value=sub?sub.reason||'':'';
+  
+  document.getElementById('editModal').classList.add('open');
+  setTimeout(()=>document.getElementById(subMode&&!editMode?'modalSubTeacher':'modalSubject').focus(),100);
+}
+
+function closeModal(){ document.getElementById('editModal').classList.remove('open'); editTarget=null; }
+
+document.getElementById('modalIsSub').onchange=function(){
+  document.getElementById('modalSubFields').style.display=this.checked?'block':'none';
+  if(this.checked) setTimeout(()=>document.getElementById('modalSubTeacher').focus(),50);
+};
+document.getElementById('modalCancel').onclick=closeModal;
+document.getElementById('editModal').onclick=function(e){ if(e.target===this) closeModal(); };
+document.getElementById('modalSave').onclick=function(){
+  if(!editTarget) return;
+  const {d,p,c}=editTarget;
+  const prev=JSON.parse(JSON.stringify({em:emSchedule,af:afSchedule,subs:subData}));
+  history.push(prev);
+  const sub=document.getElementById('modalSubject').value.trim();
+  const teacher=document.getElementById('modalTeacher').value.trim();
+  const isSub=document.getElementById('modalIsSub').checked;
+  const subTeacher=document.getElementById('modalSubTeacher').value.trim();
+  const subReason=document.getElementById('modalSubReason').value.trim();
+  
+  if(editMode){ getSched()[d][p][c]={teacher,subject:sub}; }
+  if(isSub&&subTeacher){ setSub(d,p,c,{teacher:subTeacher,reason:subReason}); }
+  else if(!isSub){ clearSub(d,p,c); }
+  
+  saveToStorage(); render(); closeModal(); enableUndo();
+  toast(isSub?'🔄 Substituição registrada!':'✅ Aula atualizada!');
+};
+document.getElementById('modalClear').onclick=function(){
+  if(!editTarget) return;
+  const {d,p,c}=editTarget;
+  const prev=JSON.parse(JSON.stringify({em:emSchedule,af:afSchedule,subs:subData}));
+  history.push(prev);
+  getSched()[d][p][c]={teacher:'',subject:''}; clearSub(d,p,c);
+  saveToStorage(); render(); closeModal(); enableUndo(); toast('🗑️ Célula limpa');
+};
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
+
+// ═══════════════════════════════════════════════════════
+//  TOOLBAR
+// ═══════════════════════════════════════════════════════
+document.getElementById('subModeBtn').onclick=function(){
+  subMode=!subMode;
+  this.classList.toggle('active',subMode);
+  this.textContent=subMode?'🔄 Substituindo':'🔄 Substituição';
+  if(subMode){ editMode=false; document.getElementById('editModeBtn').classList.remove('active'); document.getElementById('editModeBtn').textContent='✏️ Editar'; }
+  render();
+};
+document.getElementById('editModeBtn').onclick=function(){
+  editMode=!editMode;
+  this.classList.toggle('active',editMode);
+  this.textContent=editMode?'✅ Editando':'✏️ Editar';
+  document.getElementById('saveBtn').style.display=editMode?'':'none';
+  if(editMode){ subMode=false; document.getElementById('subModeBtn').classList.remove('active'); document.getElementById('subModeBtn').textContent='🔄 Substituição'; }
+  render();
+};
+document.getElementById('saveBtn').onclick=function(){ saveToStorage(); toast('💾 Salvo!'); };
+document.getElementById('undoBtn').onclick=function(){
+  if(!history.length) return;
+  const prev=history.pop();
+  emSchedule=prev.em; afSchedule=prev.af; subData=prev.subs;
+  saveToStorage(); render();
+  if(!history.length){ this.disabled=true; this.style.opacity='.4'; }
+  toast('↩ Desfeito');
+};
+document.getElementById('darkModeBtn').onclick=function(){
+  darkMode=!darkMode;
+  document.body.toggleAttribute('data-dark',darkMode);
+  this.textContent=darkMode?'☀️ Claro':'🌙 Escuro';
+  try{ localStorage.setItem('simioni_dark',darkMode?'1':'0'); }catch(e){}
+};
+document.getElementById('printBtn').onclick=()=>window.print();
+document.getElementById('resetBtn').onclick=function(){
+  if(!confirm('Restaurar todos os dados originais? Substituições e edições serão perdidas.')) return;
+  emSchedule=buildSched(EM_RAW,9); afSchedule=buildSched(AF_RAW,10); subData={};
+  history=[]; saveToStorage(); render(); enableUndo(false); toast('↩ Dados restaurados');
+};
+
+function enableUndo(on=true){
+  const btn=document.getElementById('undoBtn');
+  btn.disabled=!on; btn.style.opacity=on?'1':'.4';
+}
+
+// FILTERS
+document.getElementById('filterClass').onchange=function(){ if(this.value){ currentView='turma'; selectedClass[currentSection]=this.value; updateNavActive(); render(); } };
+document.getElementById('filterTeacher').onchange=function(){ if(this.value){ currentView='professor'; selectedTeacher[currentSection]=this.value; updateNavActive(); render(); } };
+document.getElementById('filterSubject').onchange=function(){ if(this.value){ currentView='disciplina'; selectedSubject[currentSection]=this.value; updateNavActive(); render(); } };
+document.getElementById('clearFilters').onclick=function(){
+  document.getElementById('filterClass').value='';
+  document.getElementById('filterTeacher').value='';
+  document.getElementById('filterSubject').value='';
+};
+
+// SEARCH
+let searchTimer;
+document.getElementById('globalSearch').oninput=function(){
+  clearTimeout(searchTimer);
+  searchTimer=setTimeout(()=>{ searchQuery=this.value; if(searchQuery.trim()){ currentView='busca'; updateNavActive(); } render(); },250);
+};
+
+// NAV
+document.querySelectorAll('.nav-item[data-view]').forEach(item=>{
+  item.addEventListener('click',()=>{
+    const v=item.dataset.view,c=item.dataset.class;
+    if(c) selectedClass[currentSection]=c;
+    currentView=v; searchQuery=''; document.getElementById('globalSearch').value='';
+    updateNavActive(); render();
+    document.getElementById('sidebar').classList.remove('open');
+  });
+});
+function updateNavActive(){
+  document.querySelectorAll('.nav-item[data-view]').forEach(item=>{
+    const v=item.dataset.view,c=item.dataset.class;
+    const match=v===currentView&&(!c||(c===getSelClass()));
+    item.classList.toggle('active',match&&currentSection==='em');
+    item.classList.toggle('af-active',match&&currentSection==='af');
+  });
+}
+
+// MOBILE
+document.getElementById('menuToggle').onclick=()=>document.getElementById('sidebar').classList.toggle('open');
+function checkResponsive(){
+  document.getElementById('menuToggle').style.display=window.innerWidth<768?'flex':'none';
+}
+window.addEventListener('resize',checkResponsive);
+
+// TOAST
+let toastTimer;
+function toast(msg){
+  const el=document.getElementById('toast'); el.textContent=msg; el.classList.add('show');
+  clearTimeout(toastTimer); toastTimer=setTimeout(()=>el.classList.remove('show'),2600);
+}
+
+// ═══════════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════════
+emSchedule=buildSched(EM_RAW,9);
+afSchedule=buildSched(AF_RAW,10);
+loadFromStorage();
+try{
+  if(localStorage.getItem('simioni_dark')==='1'){
+    darkMode=true; document.body.setAttribute('data-dark','');
+    document.getElementById('darkModeBtn').textContent='☀️ Claro';
+  }
+}catch(e){}
+checkResponsive();
+render();
+updateNavActive();
+</script>
+</body>
+</html>
